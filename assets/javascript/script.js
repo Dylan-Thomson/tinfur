@@ -1,6 +1,6 @@
 // Testing basic API call, check console for results
 $.ajax({
-    url: "http://api.petfinder.com/pet.find?key=7dc1511d0faaadd24a44d60d637a14d8&location=44060&output=full&format=json" + "&callback=?",
+    url: "https://api.petfinder.com/pet.find?key=7dc1511d0faaadd24a44d60d637a14d8&location=44060&output=full&format=json" + "&callback=?",
     type: "GET",
     dataType: "json"
 }).then((response) => {
