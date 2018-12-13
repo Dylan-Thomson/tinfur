@@ -12,7 +12,7 @@ $.ajax({
 
 
 $.ajax({
-    url: "http://api.petfinder.com/shelter.get?key=7dc1511d0faaadd24a44d60d637a14d8&id=OH500&format=json" + "&callback=?",
+    url: "https://api.petfinder.com/shelter.get?key=7dc1511d0faaadd24a44d60d637a14d8&id=OH500&format=json" + "&callback=?",
     type: "GET",
     dataType: "json"
 }).then((response) => {
