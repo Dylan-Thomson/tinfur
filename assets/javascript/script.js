@@ -49,24 +49,26 @@ function searchPets(zip, type, count, offset) {
         console.log(response);
         const pets = response.petfinder.pets.pet;
         pets.forEach((pet) => {
-            appendPet(pet);
+            displayPetCard(pet);
         });
     }).fail((error) => {
         console.log(error);
     });
     
-    function appendPet(pet) {
-        const name = pet.name["$t"];
-        const breeds = getBreeds(pet.breeds.breed);
-        const imgSrc = pet.media.photos.photo[3]["$t"];
-        let petDiv = $("<div>");
-        let img = $("<img>");
-        img.attr("src", imgSrc);
-        
-        petDiv.append(img);
-        petDiv.append($("<div>").text(name));
-        petDiv.append(breeds);
-        $("#pet-dump").append(petDiv);
+    function displayPetCard(pet) {
+        if(pet.media.photos) { // If there are no photos don't bother
+            const name = pet.name["$t"];
+            const breeds = getBreeds(pet.breeds.breed);
+            const imgSrc = pet.media.photos.photo[3]["$t"];
+            let petDiv = $("<div>");
+            let img = $("<img>");
+            img.attr("src", imgSrc);
+            
+            petDiv.append(img);
+            petDiv.append($("<div>").text(name));
+            petDiv.append(breeds);
+            $("#pet-dump").append(petDiv);
+        }
     }
     
     function getBreeds(breeds) {
