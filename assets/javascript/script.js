@@ -7,7 +7,7 @@ $.ajax({
     console.log(response);
 }).fail((error) => {
     console.log("Failure to get API data", error);
-})
+});
 
 
 
@@ -19,4 +19,33 @@ $.ajax({
     console.log(response);
 }).fail((error) => {
     console.log("Failure to get API data", error);
-})
+});
+
+$(document).ready(() => {
+    $("#search-pets").on("click", (event) => {
+        event.preventDefault();
+        console.log($("#input-zip-code").val(), $("#select-pet").val());
+        searchPets($("#input-zip-code").val(), $("#select-pet").val(), 10);
+    });
+});
+
+function searchPets(zip, type, count, offset) {
+    let queryURL = "https://api.petfinder.com/pet.find?key=7dc1511d0faaadd24a44d60d637a14d8"
+    queryURL += "&location=" + zip;
+    queryURL += "&animal=" + type;
+    queryURL += "&count=" + count;
+    if(offset) {
+        queryURL += "&offset" + offset;
+    }
+    queryURL += "&output=full&format=json&callback=?";
+    console.log(queryURL);
+    $.ajax({
+        url: queryURL,
+        type: "GET",
+        dataType: "json"
+    }).then((response) => {
+        console.log(response);
+    }).fail((error) => {
+        console.log(error);
+    });
+}
