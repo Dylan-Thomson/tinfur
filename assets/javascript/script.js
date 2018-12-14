@@ -50,29 +50,15 @@ function searchPets(zip, type, count, offset) {
         const pets = response.petfinder.pets.pet;
         pets.forEach((pet) => {
             const name = pet.name["$t"];
-            let breed = "";
-            let breeds = pet.breeds.breed;
-            if(Array.isArray(breeds)) {
-                breeds.forEach((b) => {
-                    if(breed === "") {
-                        breed += b["$t"]; 
-                    }
-                    else {
-                        breed += ", " + b["$t"];
-                    }
-                });
-            }
-            else {
-                breed = breeds["$t"];
-            }
+            const breeds = getBreeds(pet.breeds.breed);
             const imgSrc = pet.media.photos.photo[3]["$t"];
             let petDiv = $("<div>");
             let img = $("<img>");
             img.attr("src", imgSrc);
-
+            
             petDiv.append(img);
             petDiv.append($("<div>").text(name));
-            petDiv.append(breed);
+            petDiv.append(breeds);
             $("#pet-dump").append(petDiv);
         });
         // console.log(response.petfinder.pets.pet[0].media.photos.photo[3]["$t"]);
@@ -82,4 +68,22 @@ function searchPets(zip, type, count, offset) {
     }).fail((error) => {
         console.log(error);
     });
+    
+    function getBreeds(breeds) {
+        let breedString = "";
+        if(Array.isArray(breeds)) {
+            breeds.forEach((b) => {
+                if(breedString === "") {
+                    breedString += b["$t"]; 
+                }
+                else {
+                    breedString += ", " + b["$t"];
+                }
+            });
+        }
+        else {
+            breedString = breeds["$t"];
+        }
+        return breedString;
+    }
 }
