@@ -1,0 +1,13 @@
+.navbar-nav.navbar-center {
+    position: absolute;
+    left: 50%;
+    transform: translatex(-50%);
+}
+
+/* .navbar-header {
+    float: left;
+    padding: 15px;
+    text-align: center;
+    width: 100%;
+} */
+.navbar-brand {float:none;}
