@@ -24,8 +24,12 @@
 $(document).ready(() => {
     $("#search-pets").on("click", (event) => {
         event.preventDefault();
-        console.log($("#input-zip-code").val(), $("#select-pet").val());
-        searchPets($("#input-zip-code").val(), $("#select-pet").val(), 10);
+        const zipcode = $("#input-zip-code").val().trim();
+        const petType = $("#select-pet").val().trim();
+        console.log(zipcode, petType);
+        searchPets(zipcode, petType, 10);
+        $("#input-zip-code").val("");
+        $("#select-pet").val("");
     });
 });
 
