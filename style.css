@@ -5,13 +5,11 @@
   margin-bottom: 0px;
 }
 
-.navbar-nav.navbar-center {
-    position: absolute;
-    left: 50%;
-    transform: translatex(-50%);
+body {
+  background-color: rgb(104, 244, 77);
 }
 
-.navbar-brand {float:none;}
+
 
 #login {
     background: none;
@@ -110,3 +108,13 @@
 .col-25{
   margin: 10px;
 }
+
+#faveBox {
+  font-size: x-large;
+  color: palevioletred;
+}
+
+#faveRow {
+  border: purple 2px solid;
+}
+

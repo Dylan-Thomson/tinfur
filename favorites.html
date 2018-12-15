@@ -13,8 +13,13 @@
     <title>Document</title>
 </head>
 <body>
+        <div class="jumbotron jumbotron-fluid">
+                <div class="container">
+                  <img src='TinFur_Logo.png' alt='Logo'>
+                </div>
+              </div>
   <!--Login Button On Navbar; Button opens the modul.-->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light" style="background-color: palevioletred;">
     <button id='login' onclick="document.getElementById('id01').style.display='block'">Login</button>
 
     <!-- The Modal -->
@@ -110,8 +115,17 @@
   </nav>
 
   <div class=container id="faveBox">
-    <div class="row" class="faveRow">
-    <p>You haven't favorited any pets yet. They'll appear here when you do!</p>
+            <div class="row" id="faveRow" style="margin: 5%;">
+                    <div class="col">
+                     <p class='align-middle'> Favorites Appear Here!</p> 
+                    </div>
+                    <div class="col-md-auto">
+                    </div>
+                    <div class="col col-lg-2">
+                     <img src="sad_puppy.jpg" alt='Sad Puppy' style="height: 200px; width: 200px;">
+                    </div>
+                  </div>
+                </div>
     </div>
   </div>
 
