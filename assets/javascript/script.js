@@ -62,6 +62,9 @@ function searchPets(zip, type, count, offset) {
     function displayPetCard(pet) {
         if(pet.media.photos) { // If there are no photos don't bother
             const name = pet.name["$t"];
+            // const sex = pet.sex["$t"];
+            // console.log(sex);
+            const sex = getSex(pet.sex["$t"]);
             const breeds = getBreeds(pet.breeds.breed);
             const imgSrc = pet.media.photos.photo[3]["$t"];
             let petDiv = $("<div>");
@@ -70,7 +73,8 @@ function searchPets(zip, type, count, offset) {
             
             petDiv.append(img);
             petDiv.append($("<div>").text(name));
-            petDiv.append(breeds);
+            petDiv.append($("<div>").text(breeds));
+            petDiv.append($("<div>").text(sex));
             $("#pet-dump").append(petDiv);
         }
     }
@@ -91,5 +95,17 @@ function searchPets(zip, type, count, offset) {
             breedString = breeds["$t"];
         }
         return breedString;
+    }
+
+    function getSex(sex) {
+        if(sex == "F" || sex == "f") {
+            return "Female";
+        }
+        if(sex == "M" || sex == "m") {
+            return "Male";
+        }
+        else {
+            return "Unknown sex";
+        }
     }
 }
