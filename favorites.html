@@ -55,7 +55,7 @@
       class="close" title="Close Modal">&times;</span>
       
         <!-- Modal Content -->
-        <div class="container modal-content animate" action="/action_page.php">
+        <div class="modal-content animate" action="/action_page.php">
             <div class="row">
             <div class="col-6">
                 <img src='sad_puppy.jpg'>
@@ -167,8 +167,11 @@
     
     // When the user clicks anywhere outside of the modal, close it
     window.onclick = function(event) {
-      if (event.target == modal) {
-        modal.style.display = "none";
+      if (event.target == modalLogin) {
+        modalLogin.style.display = "none";
+      }
+      if (event.target == modalFavorite) {
+          modalFavorite.style.display = "none";
       }
     }
     </script>
