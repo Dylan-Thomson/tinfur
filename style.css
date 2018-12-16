@@ -114,7 +114,21 @@ body {
   color: palevioletred;
 }
 
-#faveRow {
-  border: purple 2px solid;
+
+
+#faveBox {
+  border: 2px purple solid;
+  height: 400px;
+  width: 300px;
+  min-width: 200px;
+  margin: 2%;
+
+}
+
+.faveImg {
+  min-width: 200px;
+  height: 75%;
+  width: 100%;
+  
 }
 
