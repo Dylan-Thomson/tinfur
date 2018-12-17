@@ -2,8 +2,10 @@ let zipcode;
 let petType;
 let offset = 10;
 let pets;
+let favorites = [];
 
 $(document).ready(() => {
+    initFavorites();
     $("#search-pets").on("click", (event) => {
         event.preventDefault();
         zipcode = $("#input-zip-code").val().trim();
@@ -17,7 +19,9 @@ $(document).ready(() => {
     });
 
     $(document).on("swiperight", ".pet-card", function(event) {
-        // event.preventDefault();
+        favorites.push($(this).attr("data-petID"));
+        localStorage.setItem("favorites", JSON.stringify(favorites));
+        console.log(favorites);
         $(this).addClass("rotate-left").delay(700).fadeOut(1, () => {
             $(this).remove();
             console.log($(".pet-card").length);
@@ -30,7 +34,6 @@ $(document).ready(() => {
     });
     
     $(document).on("swipeleft", ".pet-card", function(event) {
-        // event.preventDefault();
         $(this).addClass("rotate-right").delay(700).fadeOut(1, () => {
             $(this).remove();
             console.log($(".pet-card").length);
@@ -41,9 +44,14 @@ $(document).ready(() => {
             }
         });
     });
-    
 
 });
+
+function initFavorites() {
+    if(localStorage.favorites){
+        favorites = JSON.parse(localStorage.favorites);
+    }
+}
 
 function searchPets(zip, type, count, offset) {
     let queryURL = "https://api.petfinder.com/pet.find?key=7dc1511d0faaadd24a44d60d637a14d8"
@@ -67,7 +75,9 @@ function searchPets(zip, type, count, offset) {
         console.log(response.petfinder.lastOffset["$t"]);
         offset = response.petfinder.lastOffset["$t"];
         pets.forEach((pet) => {
-            displayPetCard(pet);
+            if(!favorites.includes(pet.id["$t"])) {
+                displayPetCard(pet);
+            }
         });
     }).fail((error) => {
         console.log(error);
@@ -76,8 +86,6 @@ function searchPets(zip, type, count, offset) {
     function displayPetCard(pet) {
         if(pet.media.photos) { // If there are no photos don't bother
             const name = pet.name["$t"];
-            // const sex = pet.sex["$t"];
-            // console.log(sex);
             const sex = getSex(pet.sex["$t"]);
             const breeds = getBreeds(pet.breeds.breed);
             const imgSrc = pet.media.photos.photo[3]["$t"];
@@ -100,6 +108,7 @@ function searchPets(zip, type, count, offset) {
             cardBody.append($("<div>").text(sex));
 
             petDiv.append(cardBody);
+            petDiv.attr("data-petID", pet.id["$t"]);
             petDiv.addClass("card pet-card mx-auto");
             
             $("#pet-dump").append(petDiv);
@@ -135,6 +144,4 @@ function searchPets(zip, type, count, offset) {
             return "Unknown sex";
         }
     }
-
-    
 }
