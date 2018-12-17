@@ -10,7 +10,7 @@ body {
 }
 
 #login {
-    background: none;
+  background: none;
 	color: inherit;
 	border: none;
 	padding: 0;
@@ -126,6 +126,14 @@ body {
   text-align: center; 
   margin-top: 5%; 
   border: purple 5px solid; 
+}
+
+.pet-card {
+  display: none;
+}
+
+.pet-card:first-of-type {
+  display: block;
 }
 
 .card-img-top {
