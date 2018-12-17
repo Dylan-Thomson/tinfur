@@ -92,7 +92,7 @@ function searchPets(zip, type, count, offset) {
             petDiv.append($("<div>").text(name));
             petDiv.append($("<div>").text(breeds));
             petDiv.append($("<div>").text(sex));
-            petDiv.addClass("pet-card");
+            petDiv.addClass("card pet-card mx-auto");
             $("#pet-dump").append(petDiv);
         }
     }
