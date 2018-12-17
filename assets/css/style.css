@@ -19,6 +19,10 @@ body {
 	outline: inherit;
 }
 
+#logo {
+  max-width: 100vw;
+}
+
 /* Bordered form */
 .modForm {
     border: 3px solid #f1f1f1;
@@ -116,15 +120,12 @@ body {
   border: purple 2px solid;
 }
 
-.pet-card {
-  /* width: 75%;  */
-  /* max-height: 500px;  */
+.pet-card, #sample-card {
   max-width: 310px; 
   margin: auto;
   text-align: center; 
   margin-top: 5%; 
   border: purple 5px solid; 
-  /* z-index: -1; */
 }
 
 .card-img-top {

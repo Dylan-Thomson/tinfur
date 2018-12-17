@@ -1,36 +1,13 @@
-// Testing basic API call, check console for results
-// $.ajax({
-//     url: "https://api.petfinder.com/pet.find?key=7dc1511d0faaadd24a44d60d637a14d8&location=44060&output=full&format=json" + "&callback=?",
-//     type: "GET",
-//     dataType: "json"
-// }).then((response) => {
-//     console.log(response);
-// }).fail((error) => {
-//     console.log("Failure to get API data", error);
-// });
-
-
-
-// $.ajax({
-//     url: "https://api.petfinder.com/shelter.get?key=7dc1511d0faaadd24a44d60d637a14d8&id=OH500&format=json" + "&callback=?",
-//     type: "GET",
-//     dataType: "json"
-// }).then((response) => {
-//     console.log(response);
-// }).fail((error) => {
-//     console.log("Failure to get API data", error);
-// });
-
 $(document).ready(() => {
-    // $.mobile.loading().hide();
     $("#search-pets").on("click", (event) => {
         event.preventDefault();
         const zipcode = $("#input-zip-code").val().trim();
         const petType = $("#select-pet").val().trim();
         console.log(zipcode, petType);
-        searchPets(zipcode, petType, 10);
+        searchPets(zipcode, petType, 25);
         $("#input-zip-code").val("");
         $("#select-pet").val("");
+        $("#sample-card").remove();
     });
 
     $(document).on("swiperight", ".pet-card", function(event) {
@@ -85,14 +62,27 @@ function searchPets(zip, type, count, offset) {
             const breeds = getBreeds(pet.breeds.breed);
             const imgSrc = pet.media.photos.photo[3]["$t"];
             let petDiv = $("<div>");
+
             let img = $("<img>");
             img.attr("src", imgSrc);
-            
+            img.attr("alt", name);
+            img.addClass("card-img-top");
             petDiv.append(img);
-            petDiv.append($("<div>").text(name));
-            petDiv.append($("<div>").text(breeds));
-            petDiv.append($("<div>").text(sex));
+
+
+            let cardBody = $("<div>");
+            cardBody.addClass("card-body");
+            let h5 = $("<h5>");
+            h5.addClass("card-title");
+            h5.text(name);
+            cardBody.append(h5);
+            // petDiv.append($("<div>").text(name));
+            cardBody.append($("<div>").text(breeds));
+            cardBody.append($("<div>").text(sex));
+
+            petDiv.append(cardBody);
             petDiv.addClass("card pet-card mx-auto");
+            
             $("#pet-dump").append(petDiv);
         }
     }
