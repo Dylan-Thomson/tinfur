@@ -125,39 +125,38 @@ function searchPets(zip, type, count, offset) {
     }).fail((error) => {
         console.log(error);
     });
-    
-    function displayPetCard(pet) {
-        if(pet.media.photos) { // If there are no photos don't bother
-            const name = pet.name["$t"];
-            const sex = getSex(pet.sex["$t"]);
-            const breeds = getBreeds(pet.breeds.breed);
-            const imgSrc = pet.media.photos.photo[3]["$t"];
-            let petDiv = $("<div>");
+}
 
-            let img = $("<img>");
-            img.attr("src", imgSrc);
-            img.attr("alt", name);
-            img.addClass("card-img-top");
-            petDiv.append(img);
+function displayPetCard(pet) {
+    if(pet.media.photos) { // If there are no photos don't bother
+        const name = pet.name["$t"];
+        const sex = getSex(pet.sex["$t"]);
+        const breeds = getBreeds(pet.breeds.breed);
+        const imgSrc = pet.media.photos.photo[3]["$t"];
+        let petDiv = $("<div>");
 
-            let cardBody = $("<div>");
-            cardBody.addClass("card-body");
-            let h5 = $("<h5>");
-            h5.addClass("card-title");
-            h5.text(name);
-            cardBody.append(h5);
-            // petDiv.append($("<div>").text(name));
-            cardBody.append($("<div>").text(breeds));
-            cardBody.append($("<div>").text(sex));
+        let img = $("<img>");
+        img.attr("src", imgSrc);
+        img.attr("alt", name);
+        img.addClass("card-img-top");
+        petDiv.append(img);
 
-            petDiv.append(cardBody);
-            petDiv.attr("data-petID", pet.id["$t"]);
-            petDiv.addClass("card pet-card mx-auto");
-            
-            $("#pet-container").append(petDiv);
-        }
+        let cardBody = $("<div>");
+        cardBody.addClass("card-body");
+        let h5 = $("<h5>");
+        h5.addClass("card-title");
+        h5.text(name);
+        cardBody.append(h5);
+        // petDiv.append($("<div>").text(name));
+        cardBody.append($("<div>").text(breeds));
+        cardBody.append($("<div>").text(sex));
+
+        petDiv.append(cardBody);
+        petDiv.attr("data-petID", pet.id["$t"]);
+        petDiv.addClass("card pet-card mx-auto");
+        
+        $("#pet-container").append(petDiv);
     }
-
 }
 
 function displayFavorite(pet) {
