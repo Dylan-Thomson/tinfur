@@ -22,6 +22,7 @@
 // });
 
 $(document).ready(() => {
+    // $.mobile.loading().hide();
     $("#search-pets").on("click", (event) => {
         event.preventDefault();
         const zipcode = $("#input-zip-code").val().trim();
@@ -31,6 +32,22 @@ $(document).ready(() => {
         $("#input-zip-code").val("");
         $("#select-pet").val("");
     });
+
+    $(document).on("swiperight", ".pet-card", function(event) {
+        // event.preventDefault();
+        $(this).addClass("rotate-left").delay(700).fadeOut(1, () => {
+            $(this).remove();
+        });
+    });
+
+    $(document).on("swipeleft", ".pet-card", function(event) {
+        // event.preventDefault();
+        $(this).addClass("rotate-right").delay(700).fadeOut(1, () => {
+            $(this).remove();
+        });
+    });
+    
+
 });
 
 function searchPets(zip, type, count, offset) {
@@ -75,6 +92,7 @@ function searchPets(zip, type, count, offset) {
             petDiv.append($("<div>").text(name));
             petDiv.append($("<div>").text(breeds));
             petDiv.append($("<div>").text(sex));
+            petDiv.addClass("pet-card");
             $("#pet-dump").append(petDiv);
         }
     }
@@ -108,4 +126,6 @@ function searchPets(zip, type, count, offset) {
             return "Unknown sex";
         }
     }
+
+    
 }

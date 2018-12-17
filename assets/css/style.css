@@ -25,7 +25,7 @@ body {
   }
   
   /* Full-width inputs */
-  input[type=text], input[type=password] {
+  /* input[type=text], input[type=password] {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -33,7 +33,7 @@ body {
     border: 1px solid #ccc;
     box-sizing: border-box;
   }
-  
+   */
   
   /* Add a hover effect for buttons */
   button:hover {
@@ -117,13 +117,14 @@ body {
 }
 
 .pet-card {
-  width: 75%; 
-  max-height: 500px; 
-  max-width: 300px; 
+  /* width: 75%;  */
+  /* max-height: 500px;  */
+  max-width: 310px; 
+  margin: auto;
   text-align: center; 
   margin-top: 5%; 
   border: purple 5px solid; 
-  z-index: -1;
+  /* z-index: -1; */
 }
 
 .card-img-top {
@@ -133,4 +134,24 @@ body {
 
 .card-body {
   background-color: lightcyan;
+}
+
+/* Swipe classes */
+
+.rotate-left {
+  transform: rotate(30deg) scale(0.8);
+  transition: 1s;
+  margin-left: 400px;
+  cursor: e-resize;
+  opacity: 0;
+  z-index: 10;
+}
+
+.rotate-right {
+  transform: rotate(-30deg) scale(0.8);
+  transition: 1s;
+  opacity: 0;
+  margin-left: -400px;
+  cursor: w-resize;
+  z-index: 10;
 }
