@@ -56,6 +56,23 @@ $(document).ready(() => {
         $("#sample-card").addClass("d-none");
         $("#favorites-container").removeClass("d-none");
         $("#pet-container").addClass("d-none");
+
+        favorites.forEach((favoriteID) => {
+            console.log(favoriteID);
+            let queryURL = "https://api.petfinder.com/pet.get?key=7dc1511d0faaadd24a44d60d637a14d8&id=";
+            queryURL += favoriteID;
+            queryURL += "&format=json&callback=?";
+            $.ajax({
+                url: queryURL,
+                type: "GET",
+                dataType: "json"
+            }).then((response) => {
+                console.log(response);
+                displayFavorite(response.petfinder.pet);
+            }).fail((error) =>{
+                console.log(error);
+            });
+        });
     });
     
     $("#home").on("click", (event) => {
@@ -140,34 +157,39 @@ function searchPets(zip, type, count, offset) {
             $("#pet-container").append(petDiv);
         }
     }
-    
-    function getBreeds(breeds) {
-        let breedString = "";
-        if(Array.isArray(breeds)) {
-            breeds.forEach((b) => {
-                if(breedString === "") {
-                    breedString += b["$t"]; 
-                }
-                else {
-                    breedString += ", " + b["$t"];
-                }
-            });
-        }
-        else {
-            breedString = breeds["$t"];
-        }
-        return breedString;
-    }
 
-    function getSex(sex) {
-        if(sex == "F" || sex == "f") {
-            return "Female";
-        }
-        if(sex == "M" || sex == "m") {
-            return "Male";
-        }
-        else {
-            return "Unknown sex";
-        }
+}
+
+function displayFavorite(pet) {
+    console.log(pet);
+}
+
+function getBreeds(breeds) {
+    let breedString = "";
+    if(Array.isArray(breeds)) {
+        breeds.forEach((b) => {
+            if(breedString === "") {
+                breedString += b["$t"]; 
+            }
+            else {
+                breedString += ", " + b["$t"];
+            }
+        });
+    }
+    else {
+        breedString = breeds["$t"];
+    }
+    return breedString;
+}
+
+function getSex(sex) {
+    if(sex == "F" || sex == "f") {
+        return "Female";
+    }
+    if(sex == "M" || sex == "m") {
+        return "Male";
+    }
+    else {
+        return "Unknown sex";
     }
 }
