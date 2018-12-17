@@ -1,6 +1,6 @@
 let zipcode;
 let petType;
-let offset = 10;
+let offset;
 let pets;
 let favorites = [];
 
@@ -10,12 +10,18 @@ $(document).ready(() => {
         event.preventDefault();
         zipcode = $("#input-zip-code").val().trim();
         petType = $("#select-pet").val().trim();
-        offset = 0;
-        console.log(zipcode, petType);
-        searchPets(zipcode, petType, 10);
-        $("#input-zip-code").val("");
-        $("#select-pet").val("");
-        $("#sample-card").remove();
+        if(zipcode.length > 0) {
+            offset = 0;
+            pets = {};
+            console.log(zipcode, petType);
+            searchPets(zipcode, petType, 10);
+            $("#input-zip-code").val("");
+            $("#select-pet").val("");
+            $("#sample-card").addClass("d-none");
+            $("#pet-container").removeClass("d-none");
+            $("#pet-container").empty();
+            $("#favorites-container").addClass("d-none");
+        }
     });
 
     $(document).on("swiperight", ".pet-card", function(event) {
@@ -45,6 +51,20 @@ $(document).ready(() => {
         });
     });
 
+    $("#favorites").on("click", (event) => {
+        event.preventDefault();
+        $("#sample-card").addClass("d-none");
+        $("#favorites-container").removeClass("d-none");
+        $("#pet-container").addClass("d-none");
+    });
+    
+    $("#home").on("click", (event) => {
+        event.preventDefault();
+        $("#sample-card").removeClass("d-none");
+        $("#favorites-container").addClass("d-none");
+        $("#pet-container").addClass("d-none");
+    });
+
 });
 
 function initFavorites() {
@@ -63,6 +83,7 @@ function searchPets(zip, type, count, offset) {
     if(offset) {
         queryURL += "&offset=" + offset;
     }
+
     queryURL += "&output=full&format=json&callback=?";
     console.log(queryURL);
     $.ajax({
@@ -79,6 +100,11 @@ function searchPets(zip, type, count, offset) {
                 displayPetCard(pet);
             }
         });
+        if($(".pet-card").length <= 0) {
+            // offset = Number(offset) + 10;
+            console.log(offset);
+            searchPets(zipcode, petType, 10, offset);
+        }
     }).fail((error) => {
         console.log(error);
     });
@@ -111,7 +137,7 @@ function searchPets(zip, type, count, offset) {
             petDiv.attr("data-petID", pet.id["$t"]);
             petDiv.addClass("card pet-card mx-auto");
             
-            $("#pet-dump").append(petDiv);
+            $("#pet-container").append(petDiv);
         }
     }
     
