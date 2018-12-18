@@ -116,6 +116,16 @@ function addFavorite(id) {
         });
 }
 
+function removeFavorite(id) {
+    favorites = favorites.filter(favID => favID !== id);
+    favoriteData = favoriteData.filter((favorite) => {
+        let favID = favorite.id["$t"];
+        return favID !== id;
+    });
+    $(".favorite[data-petID=\"" + id + "\"]").remove();
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+}
+
 function searchPets(zip, type, count, offset) {
     let queryURL = "https://api.petfinder.com/pet.find?key=7dc1511d0faaadd24a44d60d637a14d8"
     queryURL += "&location=" + zip;
@@ -238,7 +248,8 @@ function displayFavorite(pet) {
 
         $("#fav-remove").off("click");
         $("#fav-remove").on("click", () => {
-            console.log("wee");
+            removeFavorite(id);
+            $("#favorite-info").modal("toggle");
         });
 
         $("#favorite-info").show();
