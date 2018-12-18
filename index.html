@@ -2,21 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- <link rel="stylesheet" href="//code.jquery.com/mobile/1.5.0-alpha.1/jquery.mobile-1.5.0-alpha.1.min.css"> -->
+    <!-- <link rel="stylesheet" href="assets/css/jquery.mobile.custom.structure.min.css"> -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous"></script>    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <!-- <script src="assets/javascript/jquerymobile.js"></script> -->
+    <script src="assets/javascript/jquery.mobile.custom.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script> -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="assets/javascript/script.js"></script>
-    <title>Document</title>
+    <title>TinFur</title>
 </head>
 <body>
-    <div class="jumbotron jumbotron-fluid">
-      <img src='assets/images/TinFur_Logo.png' alt='Logo'>
+    <div class="text-center">
+      <img id="logo" src='assets/images/TinFur_Logo.png' alt='Logo'>
     </div>
   <!--Login Button On Navbar; Button opens the modal.-->
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: palevioletred;">
@@ -33,11 +37,11 @@
       <div class="container">
         <div class="form-group">
             <label for="username-input"><b>Username</b></label>
-            <input type="text" placeholder="Enter Username" id="username-input" required>
+            <input class="form-control" type="text" placeholder="Enter Username" id="username-input" required>
         </div>
         <div class="form-group">
             <label for="password-input"><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" id="password-input" required>
+            <input class="form-control" type="password" placeholder="Enter Password" id="password-input" required>
         </div>
   
         <button id="login-btn" type="submit">Login</button>
@@ -59,10 +63,10 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav">
         <li class="nav-item ">
-          <a class="nav-link active" href="#">Home</a>
+          <a class="nav-link active" id="home" href="#">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Favorites</a>
+          <a class="nav-link" id="favorites" href="#">Favorites</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -87,7 +91,7 @@
                         </div>
                         <div class="form-group">
                             <label for="input-zip-code">Zip code:</label>
-                            <input class="form-control" id="input-zip-code" type="text">
+                            <input class="form-control" id="input-zip-code" type="text" required>
                         </div>
                         <button class="btn" id="search-pets">Search</button>
                 </form>
@@ -98,13 +102,60 @@
     </div>
   </nav>
 
-  <div class="card pet-card mx-auto">
+  <div class="card mx-auto my-3" id="sample-card">
     <img class="card-img-top" src="assets/images/Happy_dog.jpg" alt="Happy Dog">
-    <div class="card-body">
-      <h5 class="card-title">Welcome to TinFur!</h5>
+    <div class="card-body p-0 d-flex flex-column justify-content-end text-center">
+      <h5 class="card-title m-0">Welcome to TinFur!</h5>
       <p class="card-text">Fill in the search box to find the right friend. Once your results appear here, swipe left to move on, or swipe right to add them to your favorites!</p>
     </div>
   </div> 
+
+  <div class="d-none text-center my-3" id="pet-container"></div>
+
+  <div class="d-none text-center my-3" id="favorites-container">
+        <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#favorite-info">Large modal</button> -->
+        <div class="modal fade" id="favorite-info" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                  <div class="modal-content">
+                      <div class="row">
+                          <div class="col-lg-6">
+                              <img class="pet-img" src="" id="fav-img" alt="">
+                        </div>
+                        <div class="col-lg-6">
+                            <h2 id="fav-name"></h2>
+                            <table class="table">
+                                <tbody>
+                                <tr>
+                                    <th scope="row">Breeds</th>
+                                    <td id="fav-breeds"></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Sex</th>
+                                    <td id="fav-sex"></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Age</th>
+                                    <td id="fav-age"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                          </div>
+                      </div>
+                      <div>
+                          <h3>Contact</h2>
+                          <p>Phone: <a href="" id="fav-phone"></a></p>
+                          <p>Email: <a href="" id="fav-email"></a></p>
+                          <h3>Address</h3>
+                          <p><span id="fav-addr1"></span> <span id=fav-addr2></span></p>
+                          <p><span id="fav-city"></span>, <span id="fav-state"></span> <span id="fav-zip"></span></p>
+                      </div>
+                      <button class="btn btn-warning" id="fav-close">Close</button>
+                      <button class="btn btn-danger" id="fav-remove">Remove Favorite</button>
+                  </div>  
+            </div>
+        </div>
+        </div>
+  </div>
 
   <script>
     // Get the modal
