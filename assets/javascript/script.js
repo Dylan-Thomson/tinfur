@@ -68,6 +68,9 @@ $(document).ready(() => {
         $("#favorites").removeClass("active");
     });
 
+    $("#fav-close").on("click", () => {
+        $("#favorite-info").modal("toggle");
+    });
 });
 
 // Get favorites from local storage and populate favorites div
@@ -218,7 +221,26 @@ function displayFavorite(pet) {
     favDiv.on("click", function() {
         let id = $(this).attr("data-petID");
         let petData = getPetDataFromID(id);
-        $("#modal-output").text(petData.name["$t"]);
+        $("#fav-name").text(petData.name["$t"]);
+        $("#fav-img").attr("src", petData.media.photos.photo[3]["$t"]);
+        $("#fav-breeds").text(getBreeds(petData.breeds.breed));
+        $("#fav-sex").text(getSex(petData.sex["$t"]));
+        $("#fav-age").text(petData.age["$t"]);
+        $("#fav-phone").text(petData.contact.phone["$t"]);
+        $("#fav-phone").attr("href", "tel:" + petData.contact.phone["$t"]);
+        $("#fav-email").text(petData.contact.email["$t"]);
+        $("#fav-email").attr("href", "mailto:" + petData.contact.email["$t"]);
+        $("#fav-addr1").text(petData.contact.address1["$t"]);
+        $("#fav-addr2").text(petData.contact.address2["$t"]);
+        $("#fav-city").text(petData.contact.city["$t"]);
+        $("#fav-state").text(petData.contact.state["$t"]);
+        $("#fav-zip").text(petData.contact.zip["$t"]);
+
+        $("#fav-remove").off("click");
+        $("#fav-remove").on("click", () => {
+            console.log("wee");
+        });
+
         $("#favorite-info").show();
     });
 
