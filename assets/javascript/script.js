@@ -192,7 +192,7 @@ function displayPetCard(pet) {
 function displayFavorite(pet) {
     console.log(pet);
     const name = pet.name["$t"];
-    const imgSrc = pet.media.photos.photo[2]["$t"]
+    const imgSrc = pet.media.photos.photo[3]["$t"]
 
     let img = $("<img>")
     img.attr("src", imgSrc);
@@ -208,7 +208,7 @@ function displayFavorite(pet) {
     overlay.append(title);
 
     let favDiv = $("<div>");
-    favDiv.addClass("card bg-dark text-white favorite my-2 mx-2 d-inline-block");
+    favDiv.addClass("card bg-dark text-white favorite my-1 mx-auto");
     favDiv.append(img);
     favDiv.append(overlay);
 

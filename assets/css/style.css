@@ -117,9 +117,15 @@ body {
     margin-top: 5%; 
     border: purple 5px solid;  */
   }
+
+  #sample-card, .favorite {
+    /* max-height: 70vh; */
+    /* max-width: 80%; */
+    max-width: 500px;
+  }
   
   .pet-card, #sample-card, .favorite {
-    max-width: 600px;
+    /* max-width: 300px; */
     /* text-shadow: 1px 1px #000000; */
     border: purple 2px solid; 
   }
@@ -136,8 +142,8 @@ body {
   .pet-img {
     /* max-width: 300px; */
     /* max-height: 300px; */
-    height: 300px;
-    width: auto;
+    /* height: 300px; */
+    /* width: auto; */
   }
   
   /* .card-img-top {
