@@ -116,6 +116,20 @@ body {
   .dark-transparent-bg {
     background: rgb(11, 11, 11, 0.75);
   }
+
+  /* Footer */
+  footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: palevioletred;
+  }
+
+  .clear {
+    clear: both;
+    height: 2em;
+  }
   
   /* Swipe classes */
   .rotate-left {
