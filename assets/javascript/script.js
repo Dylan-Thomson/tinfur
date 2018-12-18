@@ -22,6 +22,7 @@ $(document).ready(() => {
             $("#pet-container").removeClass("d-none");
             $("#pet-container").empty();
             $("#favorites-container").addClass("d-none");
+            $(".navbar-toggler").click();
         }
     });
 
@@ -57,6 +58,7 @@ $(document).ready(() => {
         $("#pet-container").addClass("d-none");
         $(this).addClass("active");
         $("#home").removeClass("active");
+        $(".navbar-toggler").click();
     });
     
     $("#home").on("click", (event) => {
@@ -66,6 +68,7 @@ $(document).ready(() => {
         $("#pet-container").addClass("d-none");
         $(this).addClass("active");
         $("#favorites").removeClass("active");
+        $(".navbar-toggler").click();
     });
 
     $("#fav-close").on("click", () => {
