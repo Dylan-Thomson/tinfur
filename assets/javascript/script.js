@@ -132,35 +132,84 @@ function displayPetCard(pet) {
         const name = pet.name["$t"];
         const sex = getSex(pet.sex["$t"]);
         const breeds = getBreeds(pet.breeds.breed);
-        const imgSrc = pet.media.photos.photo[3]["$t"];
-        let petDiv = $("<div>");
-
+        const imgSrc = pet.media.photos.photo[2]["$t"]
+        
         let img = $("<img>");
         img.attr("src", imgSrc);
         img.attr("alt", name);
-        img.addClass("card-img-top");
-        petDiv.append(img);
-
-        let cardBody = $("<div>");
-        cardBody.addClass("card-body");
-        let h5 = $("<h5>");
-        h5.addClass("card-title");
-        h5.text(name);
-        cardBody.append(h5);
-        // petDiv.append($("<div>").text(name));
-        cardBody.append($("<div>").text(breeds));
-        cardBody.append($("<div>").text(sex));
-
-        petDiv.append(cardBody);
-        petDiv.attr("data-petID", pet.id["$t"]);
-        petDiv.addClass("card pet-card mx-auto");
+        img.addClass("card-img pet-img");
         
+        let title = $("<h5>");
+        title.addClass("card-title dark-transparent-bg my-0 p-1");
+        title.text(name);
+        
+        let breedText = $("<p>");
+        breedText.addClass("card-text dark-transparent-bg m-0");
+        breedText.text(breeds);
+        
+        let sexText = $("<p>");
+        sexText.addClass("card-text dark-transparent-bg m-0");
+        sexText.text(sex); 
+        
+        let overlay = $("<div>");
+        overlay.addClass("card-img-overlay p-0 d-flex flex-column justify-content-end text-center");
+        overlay.append(title);
+        overlay.append(breedText);
+        overlay.append(sexText);
+        
+        let petDiv = $("<div>");
+        petDiv.append(img);
+        petDiv.append(overlay);
+        petDiv.attr("data-petID", pet.id["$t"]);
+        petDiv.addClass("card pet-card bg-dark text-white");
         $("#pet-container").append(petDiv);
+        // petDiv.append()
+        // petDiv.append(img);
+
+        // let cardBody = $("<div>");
+        // cardBody.addClass("card-body");
+        // let h5 = $("<h5>");
+        // h5.addClass("card-title");
+        // h5.text(name);
+        // cardBody.append(h5);
+        // // petDiv.append($("<div>").text(name));
+        // cardBody.append($("<div>").text(breeds));
+        // cardBody.append($("<div>").text(sex));
+
+        // petDiv.append(cardBody);
+        // petDiv.attr("data-petID", pet.id["$t"]);
+        // petDiv.addClass("card pet-card mx-auto");
+        
+        // $("#pet-container").append(petDiv);
     }
 }
 
 function displayFavorite(pet) {
     console.log(pet);
+    const name = pet.name["$t"];
+    const imgSrc = pet.media.photos.photo[2]["$t"]
+    // const imgSrc = pet.media.photos.photo[3]["$t"];
+
+    let img = $("<img>")
+    img.attr("src", imgSrc);
+    img.attr("alt", name);
+    img.addClass("card-img pet-img");
+
+    let title = $("<h5>");
+    title.addClass("card-title dark-transparent-bg my-0 p-1");
+    title.text(name);
+    
+    let overlay = $("<div>");
+    overlay.addClass("card-img-overlay p-0 d-flex flex-column justify-content-end text-center");
+    overlay.append(title);
+
+    let favDiv = $("<div>");
+    favDiv.addClass("card bg-dark text-white favorite my-2 mx-2 d-inline-block");
+    favDiv.append(img);
+    favDiv.append(overlay);
+
+    $("#favorites-container").append(favDiv);
+
 }
 
 function getBreeds(breeds) {

@@ -70,6 +70,113 @@ body {
     padding-top: 16px;
   }
   
+  
+  /* Add Zoom Animation */
+  .animate {
+    -webkit-animation: animatezoom 0.6s;
+    animation: animatezoom 0.6s
+  }
+  
+  @-webkit-keyframes animatezoom {
+    from {-webkit-transform: scale(0)} 
+    to {-webkit-transform: scale(1)}
+  }
+  
+  @keyframes animatezoom {
+    from {transform: scale(0)} 
+    to {transform: scale(1)}
+  }
+  
+  .navbar-nav > li{
+    padding-left:30px;
+    padding-right:30px;
+    font-size: large;
+  }
+  
+  .col-75{
+    margin: 10px;
+  }
+  
+  .col-25{
+    margin: 10px;
+  }
+  
+  #faveBox {
+    font-size: x-large;
+    color: palevioletred;
+  }
+  
+  #faveRow {
+    border: purple 2px solid;
+  }
+  
+  .pet-card, #sample-card {
+    /* max-width: 600px;  */
+    /* margin: auto;
+    text-align: center; 
+    margin-top: 5%; 
+    border: purple 5px solid;  */
+  }
+  
+  .pet-card, #sample-card, .favorite {
+    max-width: 600px;
+    /* text-shadow: 1px 1px #000000; */
+    border: purple 5px solid; 
+  }
+  
+  .pet-card {
+    display: none;
+  }
+  
+  .pet-card:first-of-type {
+    display: inline-block;
+    margin: auto;
+  }
+
+  .pet-img {
+    /* max-width: 300px; */
+    /* max-height: 300px; */
+    height: 300px;
+    width: auto;
+  }
+  
+  /* .card-img-top {
+    max-height: 300px; 
+    max-width:310px
+  } */
+  
+  .card-body {
+    background-color: lightcyan;
+  }
+  
+  .card-img {
+    /* max-height: 300px;
+    max-width: 300px; */
+  }
+  
+  .dark-transparent-bg {
+    background: rgb(11, 11, 11, 0.75);
+  }
+  
+  /* Swipe classes */
+  .rotate-left {
+    transform: rotate(30deg) scale(0.8);
+    transition: 1s;
+    margin-left: 400px;
+    cursor: e-resize;
+    opacity: 0;
+    z-index: 10;
+  }
+  
+  .rotate-right {
+    transform: rotate(-30deg) scale(0.8);
+    transition: 1s;
+    opacity: 0;
+    margin-left: -400px;
+    cursor: w-resize;
+    z-index: 10;
+  }
+  
   /* Change styles for span and cancel button on extra small screens */
   @media screen and (max-width: 300px) {
     span.psw {
@@ -81,86 +188,11 @@ body {
     }
   }
 
-  /* Add Zoom Animation */
-.animate {
-  -webkit-animation: animatezoom 0.6s;
-  animation: animatezoom 0.6s
-}
-
-@-webkit-keyframes animatezoom {
-  from {-webkit-transform: scale(0)} 
-  to {-webkit-transform: scale(1)}
-}
-
-@keyframes animatezoom {
-  from {transform: scale(0)} 
-  to {transform: scale(1)}
-}
-
-.navbar-nav > li{
-  padding-left:30px;
-  padding-right:30px;
-  font-size: large;
-}
-
-.col-75{
-  margin: 10px;
-}
-
-.col-25{
-  margin: 10px;
-}
-
-#faveBox {
-  font-size: x-large;
-  color: palevioletred;
-}
-
-#faveRow {
-  border: purple 2px solid;
-}
-
-.pet-card, #sample-card {
-  max-width: 310px; 
-  margin: auto;
-  text-align: center; 
-  margin-top: 5%; 
-  border: purple 5px solid; 
-}
-
-.pet-card {
-  display: none;
-}
-
-.pet-card:first-of-type {
-  display: block;
-}
-
-.card-img-top {
-  max-height: 300px; 
-  max-width:300px
-}
-
-.card-body {
-  background-color: lightcyan;
-}
-
-/* Swipe classes */
-
-.rotate-left {
-  transform: rotate(30deg) scale(0.8);
-  transition: 1s;
-  margin-left: 400px;
-  cursor: e-resize;
-  opacity: 0;
-  z-index: 10;
-}
-
-.rotate-right {
-  transform: rotate(-30deg) scale(0.8);
-  transition: 1s;
-  opacity: 0;
-  margin-left: -400px;
-  cursor: w-resize;
-  z-index: 10;
-}
+  @media screen and (max-width: 768px) {
+    .favorite {
+      /* max-width: 300px; */
+    }
+    .favorite, .pet-card, #sample-card {
+      /* max-width: 310px; */
+    }
+  }

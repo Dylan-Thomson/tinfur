@@ -19,7 +19,7 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="jumbotron jumbotron-fluid">
+    <div class="text-center">
       <img id="logo" src='assets/images/TinFur_Logo.png' alt='Logo'>
     </div>
   <!--Login Button On Navbar; Button opens the modal.-->
@@ -102,17 +102,17 @@
     </div>
   </nav>
 
-  <div class="card mx-auto" id="sample-card">
-    <img class="card-img-top" src="assets/images/Happy_dog.jpg" alt="Happy Dog">
-    <div class="card-body">
-      <h5 class="card-title">Welcome to TinFur!</h5>
-      <p class="card-text">Fill in the search box to find the right friend. Once your results appear here, swipe left to move on, or swipe right to add them to your favorites!</p>
+  <div class="card mx-auto my-3" id="sample-card">
+    <img class="card-img" src="assets/images/Happy_dog.jpg" alt="Happy Dog">
+    <div class="card-img-overlay p-0 d-flex flex-column justify-content-end text-center text-white">
+      <h5 class="card-title dark-transparent-bg m-0">Welcome to TinFur!</h5>
+      <p class="card-text dark-transparent-bg">Fill in the search box to find the right friend. Once your results appear here, swipe left to move on, or swipe right to add them to your favorites!</p>
     </div>
   </div> 
 
-  <div class="d-none" id="pet-container"></div>
+  <div class="d-none text-center my-3" id="pet-container"></div>
 
-  <div class="d-none" id="favorites-container"></div>
+  <div class="d-none text-center my-3" id="favorites-container"></div>
 
   <script>
     // Get the modal
