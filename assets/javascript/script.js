@@ -80,12 +80,20 @@ $(document).ready(() => {
     $("#fav-close").on("click", () => {
         $("#favorite-info").modal("toggle");
     });
+
+    $("#clear-all").on("click", () => {
+        removeAllFavorites();
+        $("#clear-all").addClass("d-none");
+    });
 });
 
 // Get favorites from local storage and populate favorites div
 function initFavorites() {
     if(localStorage.favorites){
         favorites = JSON.parse(localStorage.favorites);
+        if(favorites.length > 0) {
+            $("#clear-all").removeClass("d-none");
+        }
         favorites.forEach((favoriteID) => {
             console.log(favoriteID);
             let queryURL = "https://api.petfinder.com/pet.get?key=7dc1511d0faaadd24a44d60d637a14d8&id=";
@@ -107,22 +115,23 @@ function initFavorites() {
 }
 
 function addFavorite(id) {
+    $("#clear-all").removeClass("d-none");
     favorites.push(id);
     localStorage.setItem("favorites", JSON.stringify(favorites));
     let queryURL = "https://api.petfinder.com/pet.get?key=7dc1511d0faaadd24a44d60d637a14d8&id=";
-        queryURL += id;
-        queryURL += "&format=json&callback=?";
-        $.ajax({
-            url: queryURL,
-            type: "GET",
-            dataType: "json"
-        }).then((response) => {
-            console.log(response);
-            displayFavorite(response.petfinder.pet);
-            favoriteData.push(response.petfinder.pet);
-        }).fail((error) =>{
-            console.log(error);
-        });
+    queryURL += id;
+    queryURL += "&format=json&callback=?";
+    $.ajax({
+        url: queryURL,
+        type: "GET",
+        dataType: "json"
+    }).then((response) => {
+        console.log(response);
+        displayFavorite(response.petfinder.pet);
+        favoriteData.push(response.petfinder.pet);
+    }).fail((error) =>{
+        console.log(error);
+    });
 }
 
 function removeFavorite(id) {
@@ -132,6 +141,16 @@ function removeFavorite(id) {
         return favID !== id;
     });
     $(".favorite[data-petID=\"" + id + "\"]").remove();
+    if(favorites.length <= 0) {
+        $("#clear-all").addClass("d-none");
+    }
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+}
+
+function removeAllFavorites() {
+    favorites = [];
+    favoriteData = [];
+    $(".favorite").remove();
     localStorage.setItem("favorites", JSON.stringify(favorites));
 }
 
@@ -291,7 +310,7 @@ function displayFavorite(pet) {
         $("#favorite-info").show();
     });
 
-    $("#favorites-container").append(favDiv);
+    $("#favorites-container").prepend(favDiv);
 
 }
 
