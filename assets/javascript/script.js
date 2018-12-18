@@ -25,9 +25,7 @@ $(document).ready(() => {
     });
 
     $(document).on("swiperight", ".pet-card", function(event) {
-        favorites.push($(this).attr("data-petID"));
-        localStorage.setItem("favorites", JSON.stringify(favorites));
-        console.log(favorites);
+        addFavorite($(this).attr("data-petID"));
         $(this).addClass("rotate-left").delay(700).fadeOut(1, () => {
             $(this).remove();
             console.log($(".pet-card").length);
@@ -56,7 +54,25 @@ $(document).ready(() => {
         $("#sample-card").addClass("d-none");
         $("#favorites-container").removeClass("d-none");
         $("#pet-container").addClass("d-none");
+        $(this).addClass("active");
+        $("#home").removeClass("active");
+    });
+    
+    $("#home").on("click", (event) => {
+        event.preventDefault();
+        $("#sample-card").removeClass("d-none");
+        $("#favorites-container").addClass("d-none");
+        $("#pet-container").addClass("d-none");
+        $(this).addClass("active");
+        $("#favorites").removeClass("active");
+    });
 
+});
+
+// Get favorites from local storage and populate favorites div
+function initFavorites() {
+    if(localStorage.favorites){
+        favorites = JSON.parse(localStorage.favorites);
         favorites.forEach((favoriteID) => {
             console.log(favoriteID);
             let queryURL = "https://api.petfinder.com/pet.get?key=7dc1511d0faaadd24a44d60d637a14d8&id=";
@@ -73,21 +89,25 @@ $(document).ready(() => {
                 console.log(error);
             });
         });
-    });
-    
-    $("#home").on("click", (event) => {
-        event.preventDefault();
-        $("#sample-card").removeClass("d-none");
-        $("#favorites-container").addClass("d-none");
-        $("#pet-container").addClass("d-none");
-    });
-
-});
-
-function initFavorites() {
-    if(localStorage.favorites){
-        favorites = JSON.parse(localStorage.favorites);
     }
+}
+
+function addFavorite(id) {
+    favorites.push(id);
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+    let queryURL = "https://api.petfinder.com/pet.get?key=7dc1511d0faaadd24a44d60d637a14d8&id=";
+        queryURL += id;
+        queryURL += "&format=json&callback=?";
+        $.ajax({
+            url: queryURL,
+            type: "GET",
+            dataType: "json"
+        }).then((response) => {
+            console.log(response);
+            displayFavorite(response.petfinder.pet);
+        }).fail((error) =>{
+            console.log(error);
+        });
 }
 
 function searchPets(zip, type, count, offset) {

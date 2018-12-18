@@ -121,7 +121,7 @@ body {
   .pet-card, #sample-card, .favorite {
     max-width: 600px;
     /* text-shadow: 1px 1px #000000; */
-    border: purple 5px solid; 
+    border: purple 2px solid; 
   }
   
   .pet-card {
