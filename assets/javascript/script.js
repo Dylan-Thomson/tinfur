@@ -3,6 +3,7 @@ let petType;
 let offset;
 let pets;
 let favorites = [];
+let favoriteData = [];
 
 $(document).ready(() => {
     initFavorites();
@@ -85,6 +86,7 @@ function initFavorites() {
             }).then((response) => {
                 console.log(response);
                 displayFavorite(response.petfinder.pet);
+                favoriteData.push(response.petfinder.pet);
             }).fail((error) =>{
                 console.log(error);
             });
@@ -105,6 +107,7 @@ function addFavorite(id) {
         }).then((response) => {
             console.log(response);
             displayFavorite(response.petfinder.pet);
+            favoriteData.push(response.petfinder.pet);
         }).fail((error) =>{
             console.log(error);
         });
@@ -183,24 +186,6 @@ function displayPetCard(pet) {
         petDiv.attr("data-petID", pet.id["$t"]);
         petDiv.addClass("card pet-card bg-dark text-white");
         $("#pet-container").append(petDiv);
-        // petDiv.append()
-        // petDiv.append(img);
-
-        // let cardBody = $("<div>");
-        // cardBody.addClass("card-body");
-        // let h5 = $("<h5>");
-        // h5.addClass("card-title");
-        // h5.text(name);
-        // cardBody.append(h5);
-        // // petDiv.append($("<div>").text(name));
-        // cardBody.append($("<div>").text(breeds));
-        // cardBody.append($("<div>").text(sex));
-
-        // petDiv.append(cardBody);
-        // petDiv.attr("data-petID", pet.id["$t"]);
-        // petDiv.addClass("card pet-card mx-auto");
-        
-        // $("#pet-container").append(petDiv);
     }
 }
 
@@ -208,7 +193,6 @@ function displayFavorite(pet) {
     console.log(pet);
     const name = pet.name["$t"];
     const imgSrc = pet.media.photos.photo[2]["$t"]
-    // const imgSrc = pet.media.photos.photo[3]["$t"];
 
     let img = $("<img>")
     img.attr("src", imgSrc);
@@ -227,6 +211,16 @@ function displayFavorite(pet) {
     favDiv.addClass("card bg-dark text-white favorite my-2 mx-2 d-inline-block");
     favDiv.append(img);
     favDiv.append(overlay);
+
+    favDiv.attr("data-toggle", "modal");
+    favDiv.attr("data-target", "#favorite-info");
+    favDiv.attr("data-petID", pet.id["$t"]);
+    favDiv.on("click", function() {
+        let id = $(this).attr("data-petID");
+        let petData = getPetDataFromID(id);
+        $("#modal-output").text(petData.name["$t"]);
+        $("#favorite-info").show();
+    });
 
     $("#favorites-container").append(favDiv);
 
@@ -260,4 +254,17 @@ function getSex(sex) {
     else {
         return "Unknown sex";
     }
+}
+
+function getPetDataFromID(id) {
+    let petData;
+    favoriteData.forEach((favorite) => {
+        let favoriteID = favorite.id["$t"];
+        if(favoriteID === id) {
+            petData = favorite;
+            return false;
+        }
+    });
+    console.log("got pet data", petData);
+    return petData;
 }
