@@ -258,7 +258,7 @@ function displayFavorite(pet) {
         $("#fav-email").text(petData.contact.email["$t"]);
         $("#fav-email").attr("href", "mailto:" + petData.contact.email["$t"]);
 
-        $("fav-addr1").empty();
+        $("#fav-addr1").empty();
         $("#fav-addr1").text(petData.contact.address1["$t"]);
 
         $("#fav-addr2").empty();
