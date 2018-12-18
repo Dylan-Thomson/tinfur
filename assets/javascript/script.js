@@ -225,25 +225,52 @@ function displayFavorite(pet) {
     favDiv.append(img);
     favDiv.append(overlay);
 
+    
     favDiv.attr("data-toggle", "modal");
     favDiv.attr("data-target", "#favorite-info");
     favDiv.attr("data-petID", pet.id["$t"]);
     favDiv.on("click", function() {
         let id = $(this).attr("data-petID");
         let petData = getPetDataFromID(id);
+
+        $("#fav-name").empty();
         $("#fav-name").text(petData.name["$t"]);
+
+        $("#fav-img").attr("src", "");
         $("#fav-img").attr("src", petData.media.photos.photo[3]["$t"]);
+
+        $("#fav-breeds").empty();
         $("#fav-breeds").text(getBreeds(petData.breeds.breed));
+
+        $("#fav-sex").empty();
         $("#fav-sex").text(getSex(petData.sex["$t"]));
+
+        $("fav-age").empty();
         $("#fav-age").text(petData.age["$t"]);
+
+        $("#fav-phone").empty();
+        $("#fav-phone").attr("href", "");
         $("#fav-phone").text(petData.contact.phone["$t"]);
         $("#fav-phone").attr("href", "tel:" + petData.contact.phone["$t"]);
+
+        $("#fav-email").empty();
+        $("#fav-email").attr("href", "");
         $("#fav-email").text(petData.contact.email["$t"]);
         $("#fav-email").attr("href", "mailto:" + petData.contact.email["$t"]);
+
+        $("fav-addr1").empty();
         $("#fav-addr1").text(petData.contact.address1["$t"]);
+
+        $("#fav-addr2").empty();
         $("#fav-addr2").text(petData.contact.address2["$t"]);
+
+        $("#fav-city").empty();
         $("#fav-city").text(petData.contact.city["$t"]);
+
+        $("#fav-state").empty();
         $("#fav-state").text(petData.contact.state["$t"]);
+
+        $("#fav-zip").empty();
         $("#fav-zip").text(petData.contact.zip["$t"]);
 
         $("#fav-remove").off("click");
