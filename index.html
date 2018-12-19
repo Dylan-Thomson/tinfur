@@ -27,30 +27,37 @@
     <!-- The Modal -->
     <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content p-3 text-center">
-                    <form class=" m-auto">
-                        <h5>Create account or log in</h5>
-                          <div class="form-group">
-                              <!-- <label for="email-input">Email:</label> -->
-                              <input class="form-control" id="email-input" type="email" placeholder="Email">
-                          </div>
-                  
-                          <div class="form-group">
-                              <!-- <label for="password-input">Password:</label> -->
-                              <input class="form-control" id="password-input" type="password" placeholder="Password">
-                          </div>
-                          <button id="signup-btn" class="btn btn-secondary">
-                            Sign Up
-                          </button>
-                  
-                        <button id="login-btn" class="btn btn-action">
-                          Log in
-                        </button>
-                
-                        <button id="logout-btn" class="btn btn-action">
-                          Log Out
-                        </button>    
-                    </form>
+                <div class="modal-content">
+                    <div class="modal-header">
+                            <h5 class="modal-title">Create account or log in</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                              <div class="form-group">
+                                  <label for="email-input">Email:</label>
+                                  <input class="form-control" id="email-input" type="email" placeholder="Email">
+                              </div>
+                      
+                              <div class="form-group">
+                                  <label for="password-input">Password:</label>
+                                  <input class="form-control" id="password-input" type="password" placeholder="Password">
+                              </div>
+                              <button id="signup-btn" class="btn btn-secondary">
+                                Sign Up
+                              </button>
+                      
+                            <button id="login-btn" class="btn btn-action">
+                              Log in
+                            </button>
+                    
+                            <button id="logout-btn" class="btn btn-action">
+                              Log Out
+                            </button>    
+                        </form>
+                    </div>
               </div>  
         </div>
     </div>
@@ -122,6 +129,7 @@
         <div class="modal fade" id="favorite-info" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                   <div class="modal-content">
+                      <!-- <div class="modal-header"></div> -->
                       <div class="row">
                           <div class="col-lg-6">
                               <img class="pet-img" src="" id="fav-img" alt="">
