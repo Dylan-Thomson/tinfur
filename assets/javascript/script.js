@@ -273,8 +273,11 @@ function displayFavorite(pet) {
         $("#fav-sex").empty();
         $("#fav-sex").text(getSex(petData.sex["$t"]));
 
-        $("fav-age").empty();
+        $("#fav-age").empty();
         $("#fav-age").text(petData.age["$t"]);
+
+        $("#fav-desc").empty();
+        $("#fav-desc").text(petData.description["$t"]);
 
         $("#fav-phone").empty();
         $("#fav-phone").attr("href", "");
