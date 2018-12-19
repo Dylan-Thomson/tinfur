@@ -4,10 +4,45 @@ let offset;
 let pets;
 let favorites = [];
 let favoriteData = [];
-
+        
 $(document).ready(() => {
     initFavorites();
-    $("#search-pets").on("click", (event) => {
+
+    $("#login").on("click", event => {
+        event.preventDefault();
+        console.log("login click");
+        $("#login-modal").modal("show");
+    });
+
+    $("#login-btn").on("click", event => {
+        event.preventDefault();
+        const email = $("#email-input").val();
+        const password = $("#password-input").val();
+        const auth = firebase.auth();
+
+        const promise = auth.signInWithEmailAndPassword(email, password);
+        console.log("Logging in", email);
+        promise.catch(error => console.log(error.message));
+    });
+    
+    $("#signup-btn").on("click", event => {
+        event.preventDefault();
+        const email = $("#email-input").val();
+        const password = $("#password-input").val();
+        const auth = firebase.auth();
+
+        const promise = auth.createUserWithEmailAndPassword(email, password);
+        console.log("Signing up", email);
+        promise.catch(error => console.log(error.message));
+    });
+
+    $("#logout-btn").on("click", event => {
+        event.preventDefault();
+        console.log("Logging out", firebase.auth().currentUser.email);
+        firebase.auth().signOut();
+    });
+
+    $("#search-pets").on("click", event => {
         event.preventDefault();
         zipcode = $("#input-zip-code").val().trim();
         petType = $("#select-pet").val().trim();
@@ -53,7 +88,7 @@ $(document).ready(() => {
         });
     });
 
-    $("#favorites").on("click", (event) => {
+    $("#favorites").on("click", event => {
         event.preventDefault();
         $("#sample-card").addClass("d-none");
         $("#favorites-container").removeClass("d-none");
@@ -65,7 +100,7 @@ $(document).ready(() => {
         }
     });
     
-    $("#home").on("click", (event) => {
+    $("#home").on("click", event => {
         event.preventDefault();
         $("#sample-card").removeClass("d-none");
         $("#favorites-container").addClass("d-none");
@@ -85,6 +120,27 @@ $(document).ready(() => {
         removeAllFavorites();
         $("#clear-all").addClass("d-none");
     });
+
+    firebase.auth().onAuthStateChanged(firebaseUser => {
+        if(firebaseUser) {
+            console.log("logged in");
+            let user = firebase.auth().currentUser;
+            let uid = user.uid;
+    
+            database.ref().once("value").then((snapshot) => {
+                if(!snapshot.child(uid).exists()) {
+                    console.log("No favorite data for this user initialized");
+                }
+                else {
+                    console.log(snapshot.child(uid));
+                }
+            });
+    
+        } else {
+          console.log('not logged in');
+        }
+      
+      });
 });
 
 // Get favorites from local storage and populate favorites div

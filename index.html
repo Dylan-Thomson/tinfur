@@ -23,44 +23,43 @@
     </div>
   <!--Login Button On Navbar; Button opens the modal.-->
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: palevioletred;">
-    <button id='login' onclick="document.getElementById('login-modal').style.display='block'">Login</button>
-
+    <button id="login">Login</button>
     <!-- The Modal -->
+    <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content p-3 text-center">
+                    <form class=" m-auto">
+                        <h5>Create account or log in</h5>
+                          <div class="form-group">
+                              <!-- <label for="email-input">Email:</label> -->
+                              <input class="form-control" id="email-input" type="email" placeholder="Email">
+                          </div>
+                  
+                          <div class="form-group">
+                              <!-- <label for="password-input">Password:</label> -->
+                              <input class="form-control" id="password-input" type="password" placeholder="Password">
+                          </div>
+                          <button id="signup-btn" class="btn btn-secondary">
+                            Sign Up
+                          </button>
+                  
+                        <button id="login-btn" class="btn btn-action">
+                          Log in
+                        </button>
+                
+                        <button id="logout-btn" class="btn btn-action">
+                          Log Out
+                        </button>    
+                    </form>
+              </div>  
+        </div>
+    </div>
 <div id="login-modal" class="modal">
     <span onclick="document.getElementById('login-modal').style.display='none'" 
   class="close" title="Close Modal">&times;</span>
   
     <!-- Modal Content -->
-    <form class="modal-content animate">
-  
-      <div class="container">
-          <div class="form-group">
-              <input id="txtEmail" type="email" placeholder="Email">
-          </div>
-
-          <div class="form-group">
-              <input id="txtPassword" type="password" placeholder="Password">
-          </div>
-
-
-        <button id="btnLogin" class="btn btn-action">
-          log in
-        </button>
-
-        <button id="btnSignUp" class="btn btn-secondary">
-          Sign Up
-        </button>
-
-        <button id="btnLogOut" class="btn btn-action hide">
-          Log Out
-        </button>
-      </div>
-  
-      <!-- <div class="container" style="background-color:#f1f1f1">
-        <button type="button" onclick="document.getElementById('login-modal').style.display='none'" class="cancelbtn">Cancel</button>
-      </div> -->
-    </form>
-  </div>
+</div>
   
 <!--The Navbar should create 'sandwich button' on smaller screens.-->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -166,7 +165,7 @@
                   </div>  
             </div>
         </div>
-        </div>
+    </div>
   </div>
 
   <div class="clear"></div>
@@ -175,18 +174,6 @@
           Powered by <a href="https://www.petfinder.com/" target="_blank">Petfinder.com</a> 
       </div>
   </footer>
-
-  <script>
-    // Get the modal
-    var modal = document.getElementById('login-modal');
-    
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-      if (event.target == modal) {
-        modal.style.display = "none";
-      }
-    }
-    </script>
 
 </body>
 </html>
