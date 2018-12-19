@@ -38,7 +38,7 @@ $(document).ready(function () {
         const email = txtEmail.value;
         const pass = txtPassword.value;
         const auth = firebase.auth();
-        console.log(email, pass, "SIGN UP");
+        console.log(email, "SIGN UP");
         // sign in
         const promise = auth.createUserWithEmailAndPassword(email, pass);
         // if error
@@ -53,11 +53,16 @@ $(document).ready(function () {
     
     // Add a realtime listener
     firebase.auth().onAuthStateChanged(firebaseUser => {
-        if(firebaseUser) {
-            console.log(firebaseUser);
+    if(firebaseUser) {
+        console.log("logged in");
+        // btnLogOut.classList.remove('d-none');
+        let user = firebase.auth().currentUser;
+        if(!user.favorites) {
+            user.favorites = [];
+        }
     } else {
       console.log('not logged in');
-      btnLogOut.classList.add('hide');
+    //   btnLogOut.classList.add('d-none');
     }
   
   });
