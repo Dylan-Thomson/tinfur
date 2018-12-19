@@ -61,7 +61,8 @@ $(document).ready(() => {
         event.preventDefault();
         zipcode = $("#input-zip-code").val().trim();
         petType = $("#select-pet").val().trim();
-        if(zipcode.length > 0) {
+        if(isValidZipcode(zipcode)) {
+            $("#zip-error-msg").text("");
             offset = 0;
             pets = {};
             searchPets(zipcode, petType, 10);
@@ -75,6 +76,9 @@ $(document).ready(() => {
             if($(window).width() < 992) {
                 $(".navbar-toggler").click();
             }
+        }
+        else {
+            $("#zip-error-msg").text("Invalid US zip code");
         }
     });
 
@@ -484,4 +488,8 @@ function getPetDataFromID(id) {
 
 function isValidAddress(address) {
     return address.length > 1 && /\d/.test(address) && address.substr(0,1).toLowerCase() !== "po";
+}
+
+function isValidZipcode(zipcode) {
+    return /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(zipcode);
 }
