@@ -23,7 +23,7 @@
     </div>
   <!--Login Button On Navbar; Button opens the modal.-->
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: palevioletred;">
-    <button id="login">Login</button>
+    <button class="p-3" id="login">Login</button>
     <!-- The Modal -->
     <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -35,6 +35,7 @@
                             </button>
                     </div>
                     <div class="modal-body">
+                        <div class="text-danger text-center my-2" id="login-error-msg"></div>
                         <form id="login-form">
                               <div class="form-group">
                                   <label for="email-input">Email:</label>

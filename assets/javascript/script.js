@@ -6,7 +6,7 @@ let favorites = [];
 let favoriteData = [];
         
 $(document).ready(() => {
-    initFavorites();
+    // initFavorites();
 
     $("#login").on("click", event => {
         event.preventDefault();
@@ -16,13 +16,24 @@ $(document).ready(() => {
 
     $("#login-btn").on("click", event => {
         event.preventDefault();
-        const email = $("#email-input").val();
+        let email = $("#email-input").val();
         const password = $("#password-input").val();
         const auth = firebase.auth();
 
         const promise = auth.signInWithEmailAndPassword(email, password);
         console.log("Logging in", email);
-        promise.catch(error => console.log(error.message));
+        $("#email-input").val("");
+        $("#password-input").val("");
+        promise.catch(error => {
+            if(error) {
+                $("#login-error-msg").text(error.message);
+                console.log(error.message);
+            }
+            else {
+                $("#login-modal").modal("hide");
+                $("#login-error-msg").text("");
+            }
+        }); 
     });
     
     $("#signup-btn").on("click", event => {
@@ -30,16 +41,29 @@ $(document).ready(() => {
         const email = $("#email-input").val();
         const password = $("#password-input").val();
         const auth = firebase.auth();
-
+        
         const promise = auth.createUserWithEmailAndPassword(email, password);
         console.log("Signing up", email);
-        promise.catch(error => console.log(error.message));
+        $("#email-input").val("");
+        $("#password-input").val("");
+        promise.catch(error => {
+            if(error) {
+                $("#login-error-msg").text(error.message);
+                console.log(error.message);
+            }
+            else {
+                $("#login-modal").modal("hide");
+                $("#login-error-msg").text("");
+            }
+        });
+        
     });
 
     $("#logout-btn").on("click", event => {
         event.preventDefault();
-        console.log("Logging out", firebase.auth().currentUser.email);
         firebase.auth().signOut();
+        console.log("Logging out", firebase.auth().currentUser.email);
+        $("#login-modal").modal("hide");
     });
 
     $("#search-pets").on("click", event => {
@@ -119,134 +143,123 @@ $(document).ready(() => {
 
     firebase.auth().onAuthStateChanged(firebaseUser => {
         if(firebaseUser) {
-            console.log("logged in");
-            let user = firebase.auth().currentUser;
-            let uid = user.uid;
-            
-            $("#login").text(user.email);
+            console.log("logged in");            
+            $("#login").text(firebaseUser.email);
             $("#login-form").addClass("d-none");
             $("#logout-btn").removeClass("d-none");
-            database.ref().once("value").then((snapshot) => {
-                if(!snapshot.child("users").exists()) {
-                    // database.ref("users").set({
-                    //     uid: favorites = {
-                    //         test: "val"
-                    //     }
-                    // });
-                }
-                else {
-                    if(snapshot.val().uid) {
-                        console.log(snapshot.val().uid);
-                    }
-                    else {
-                        // database.ref("userFavorites").push(uid);
-                        console.log("no user data");
-                    }
-                    console.log("we", snapshot.val());
-                }
-            });
+            $("#navbarDropdownMenuLink").removeClass("d-none");
+            $("#home").removeClass("d-none");
+            $("#favorites").removeClass("d-none");
+
+            initFavorites();
             
         } else {
             console.log('not logged in');
             $("#login").text("Login");
             $("#login-form").removeClass("d-none");
             $("#logout-btn").addClass("d-none");
+            $("#navbarDropdownMenuLink").addClass("d-none");
+            $("#home").addClass("d-none");
+            $("#favorites").addClass("d-none");
+            // navbarDropdownMenuLink
+            // home
+            //favorites
         } 
       });
 
-    //   database.ref().once("value").then((snapshot) => {
-    //     if(snapshot.val()) {
-    //         console.log("user favorites already exists");
-    //     }
-    //     else {
-    //         database.ref("userFavorites").set({
-    //             test: "val"
-    //         });
-    //     }
-    //   });
 });
 
 // Get favorites from local storage and populate favorites div
 function initFavorites() {
-    if(localStorage.favorites){
-        // favorites = JSON.parse(localStorage.favorites);
-        if(favorites.length > 0) {
-            $("#clear-all").removeClass("d-none");
-        }
-        favorites.forEach((favoriteID) => {
-            // console.log(favoriteID);
-            let queryURL = "https://api.petfinder.com/pet.get?key=7dc1511d0faaadd24a44d60d637a14d8&id=";
-            queryURL += favoriteID;
-            queryURL += "&format=json&callback=?";
-            $.ajax({
-                url: queryURL,
-                type: "GET",
-                dataType: "json"
-            }).then((response) => {
-                // console.log(response);
-                displayFavorite(response.petfinder.pet);
-                favoriteData.push(response.petfinder.pet);
-            }).fail((error) =>{
-                console.log(error);
-            });
+    const uid = firebase.auth().currentUser.uid;
+    if(uid) {
+        database.ref("users/" + uid + "/favorites").once("value").then(snapshot => {
+            if(snapshot.val()) {
+                const userFavorites = Object.values(snapshot.val());
+                console.log(userFavorites);
+                if(userFavorites.length > 0) $("#clear-all").removeClass("d-none");
+                userFavorites.forEach(userFavorite => {
+                    favorites.push(userFavorite.id);
+                    console.log(userFavorite.id);
+                    let queryURL = "https://api.petfinder.com/pet.get?key=7dc1511d0faaadd24a44d60d637a14d8&id=";
+                    queryURL += userFavorite.id;
+                    queryURL += "&format=json&callback=?";
+                    $.ajax({
+                        url: queryURL,
+                        type: "GET",
+                        dataType: "json"
+                    }).then((response) => {
+                        displayFavorite(response.petfinder.pet);
+                        favoriteData.push(response.petfinder.pet);
+                    }).fail((error) =>{
+                        console.log(error);
+                    });
+                });
+            }
         });
     }
 }
 
 function addFavorite(id) {
-    $("#clear-all").removeClass("d-none");
-    favorites.push(id);
-    const uid = firebase.auth().currentUser.uid;
-    // localStorage.setItem("favorites", JSON.stringify(favorites));
-    if(uid) {
-        database.ref("users/" + uid + "/favorites").push({id});
+    if(firebase.auth().currentUser) {
+        $("#clear-all").removeClass("d-none");
+        favorites.push(id);
+        const uid = firebase.auth().currentUser.uid;
+        // localStorage.setItem("favorites", JSON.stringify(favorites));
+        if(uid) {
+            database.ref("users/" + uid + "/favorites").push({id});
+        }
+    
+        let queryURL = "https://api.petfinder.com/pet.get?key=7dc1511d0faaadd24a44d60d637a14d8&id=";
+        queryURL += id;
+        queryURL += "&format=json&callback=?";
+        $.ajax({
+            url: queryURL,
+            type: "GET",
+            dataType: "json"
+        }).then((response) => {
+            // console.log(response);
+            displayFavorite(response.petfinder.pet);
+            favoriteData.push(response.petfinder.pet);
+        }).fail((error) =>{
+            console.log(error);
+        });
     }
-
-    let queryURL = "https://api.petfinder.com/pet.get?key=7dc1511d0faaadd24a44d60d637a14d8&id=";
-    queryURL += id;
-    queryURL += "&format=json&callback=?";
-    $.ajax({
-        url: queryURL,
-        type: "GET",
-        dataType: "json"
-    }).then((response) => {
-        // console.log(response);
-        displayFavorite(response.petfinder.pet);
-        favoriteData.push(response.petfinder.pet);
-    }).fail((error) =>{
-        console.log(error);
-    });
 }
 
 function removeFavorite(id) {
-    const uid = firebase.auth().currentUser.uid;
-    if(uid) {
-        database.ref("users/" + uid + "/favorites").orderByChild("id").equalTo(id).once("value", snapshot => {
-            const updates = {};
-            snapshot.forEach(child => updates[child.key] = null);
-            database.ref("users/" + uid + "/favorites").update(updates);
+    if(firebase.auth().currentUser) {
+        const uid = firebase.auth().currentUser.uid;
+        if(uid) {
+            database.ref("users/" + uid + "/favorites").orderByChild("id").equalTo(id).once("value", snapshot => {
+                const updates = {};
+                snapshot.forEach(child => updates[child.key] = null);
+                database.ref("users/" + uid + "/favorites").update(updates);
+            });
+        }
+        favorites = favorites.filter(favID => favID !== id);
+        favoriteData = favoriteData.filter((favorite) => {
+            let favID = favorite.id["$t"];
+            return favID !== id;
         });
-    }
-    favorites = favorites.filter(favID => favID !== id);
-    favoriteData = favoriteData.filter((favorite) => {
-        let favID = favorite.id["$t"];
-        return favID !== id;
-    });
-    $(".favorite[data-petID=\"" + id + "\"]").remove();
-    if(favorites.length <= 0) {
-        $("#clear-all").addClass("d-none");
+        $(".favorite[data-petID=\"" + id + "\"]").remove();
+        if(favorites.length <= 0) {
+            $("#clear-all").addClass("d-none");
+        }
     }
     // localStorage.setItem("favorites", JSON.stringify(favorites));
 }
 
 function removeAllFavorites() {
-    const uid = firebase.auth().currentUser.uid;
-    favorites = [];
-    favoriteData = [];
-    $(".favorite").remove();
-    // localStorage.setItem("favorites", JSON.stringify(favorites));
-    if(uid) {
-        database.ref("users/" + uid + "/favorites").remove();
+    if(firebase.auth().currentUser) {
+        const uid = firebase.auth().currentUser.uid;
+        favorites = [];
+        favoriteData = [];
+        $(".favorite").remove();
+        // localStorage.setItem("favorites", JSON.stringify(favorites));
+        if(uid) {
+            database.ref("users/" + uid + "/favorites").remove();
+        }
     }
 }
 
