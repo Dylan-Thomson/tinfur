@@ -1,8 +1,12 @@
 .jumbotron {
-  background-color: rgb(104, 244, 77);
+  background-color: rgb(207, 248, 187);
   text-align: center;
-  /* padding-block-start: 0px; */
-  margin-bottom: 0px;
+  padding-block-start: 0px;
+  margin-bottom: -50px;
+}
+
+body {
+  background-color: rgb(225, 227, 231);
 }
 
 .navbar-nav.navbar-center {
@@ -15,7 +19,7 @@
 
 #login {
     background: none;
-	color: inherit;
+	color: white;
 	border: none;
 	padding: 0;
 	font: inherit;
@@ -34,7 +38,7 @@
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
-    border: 1px solid #ccc;
+    border: 1px solid rgb(204, 204, 204);
     box-sizing: border-box;
   }
   
@@ -110,3 +114,4 @@
 .col-25{
   margin: 10px;
 }
+

@@ -13,11 +13,16 @@
     <title>Document</title>
 </head>
 <body>
+        <div class="jumbotron jumbotron-fluid">
+                <div class="container">
+                  <img src='TinFur_Logo.png' alt='Logo'>
+                </div>
+              </div>
   <!--Login Button On Navbar; Button opens the modul.-->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgb(181, 123, 235);">
     <button id='login' onclick="document.getElementById('id01').style.display='block'">Login</button>
 
-    <!-- The Modal -->
+    <!-- The Login Modal -->
 <div id="id01" class="modal">
     <span onclick="document.getElementById('id01').style.display='none'" 
   class="close" title="Close Modal">&times;</span>
@@ -43,6 +48,28 @@
       </div>
     </form>
   </div>
+
+     <!-- The Favorite Modal -->
+<div id="id02" class="modal">
+        <span onclick="document.getElementById('id02').style.display='none'" 
+      class="close" title="Close Modal">&times;</span>
+      
+        <!-- Modal Content -->
+        <div class="modal-content animate" action="/action_page.php">
+            <div class="row">
+            <div class="col-6">
+                <img src='sad_puppy.jpg'>
+            </div>
+            <div class='col-6'>
+                <ul>
+                    <li id='name'>Pet Name</li>
+                    <li id='age'>Pet Age</li>
+                    <li id='sex'>Pet Sex</li>
+                </ul>
+            </div>
+            </div>
+        </div> 
+      </div>
 <!--The Navbar should create 'sandwich button' on smaller screens.-->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -50,10 +77,10 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav">
         <li class="nav-item ">
-          <a class="nav-link" href="#">Home</a>
+          <a class="nav-link" href="index.html">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="#">Favorites</a>
+          <a class="nav-link active" href="favorites.html">Favorites</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -109,24 +136,65 @@
     </div>
   </nav>
 
-  <div class=container id="faveBox">
-    <div class="row" class="faveRow">
-    <p>You haven't favorited any pets yet. They'll appear here when you do!</p>
+</div>
+<div class=container id="myFav" style="background-color: rgb(178, 152, 250)"> 
+ 
+  <h1>Your Fur-vorites...</h1> 
+
+</div>
+
+        <div class="container-fluid" id="fave">
+            <div class="row p-2" id="faveRow">
+                <div class="col-3" id="faveBox" onclick="document.getElementById('id02').style.display='block'">
+                    <img class="faveImg" src="sad_puppy.jpg">
+                    <p>No Favorites Yet!</p>
+                </div>
+                <div class="col-3" id="faveBox">
+                        <img class="faveImg" src="sad_puppy.jpg">
+                        <p>No Favorites Yet!</p>
+                    </div>
+                    <div class="col-3" id="faveBox">
+                            <img class="faveImg" src="sad_puppy.jpg">
+                            <p>No Favorites Yet!</p>
+                        </div>
+                        <div class="col-3" id="faveBox">
+                                <img class="faveImg" src="sad_puppy.jpg">
+                                <p>No Favorites Yet!</p>
+                            </div>
+            </div>
+        </div>
     </div>
   </div>
 
 
   <script>
     // Get the modal
-    var modal = document.getElementById('id01');
+    var modalLogin = document.getElementById('id01');
+    var modalFavorite = document.getElementById('id02');
     
     // When the user clicks anywhere outside of the modal, close it
     window.onclick = function(event) {
-      if (event.target == modal) {
-        modal.style.display = "none";
+      if (event.target == modalLogin) {
+        modalLogin.style.display = "none";
+      }
+      if (event.target == modalFavorite) {
+          modalFavorite.style.display = "none";
       }
     }
     </script>
 
 </body>
 </html>
+© 2018 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Help
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
+
