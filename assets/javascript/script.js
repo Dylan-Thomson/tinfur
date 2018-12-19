@@ -6,11 +6,8 @@ let favorites = [];
 let favoriteData = [];
         
 $(document).ready(() => {
-    // initFavorites();
-
     $("#login").on("click", event => {
         event.preventDefault();
-        console.log("login click");
         $("#login-modal").modal("show");
     });
 
@@ -25,11 +22,9 @@ $(document).ready(() => {
             $("#login-modal").modal("hide");
             $("#email-input").val("");
             $("#password-input").val("");
-            console.log("Logging in", email);
         });
         promise.catch(error => {
             $("#login-error-msg").text(error.message);
-            console.log(error.message);
         }); 
     });
     
@@ -44,11 +39,9 @@ $(document).ready(() => {
             $("#login-modal").modal("hide");
             $("#email-input").val("");
             $("#password-input").val("");
-            console.log("Signing up", email);
         });
         promise.catch(error => {
             $("#login-error-msg").text(error.message);
-            console.log(error.message);
         });
         
     });
@@ -56,7 +49,6 @@ $(document).ready(() => {
     $("#logout-btn").on("click", event => {
         event.preventDefault();
         firebase.auth().signOut();
-        console.log("Logging out", firebase.auth().currentUser.email);
         $("#login-modal").modal("hide");
     });
 
@@ -67,7 +59,6 @@ $(document).ready(() => {
         if(zipcode.length > 0) {
             offset = 0;
             pets = {};
-            // console.log(zipcode, petType);
             searchPets(zipcode, petType, 10);
             $("#input-zip-code").val("");
             $("#select-pet").val("");
@@ -85,10 +76,8 @@ $(document).ready(() => {
         addFavorite($(this).attr("data-petID"));
         $(this).addClass("rotate-left").delay(700).fadeOut(1, () => {
             $(this).remove();
-            // console.log($(".pet-card").length);
             if($(".pet-card").length <= 0) {
                 offset += 10;
-                // console.log(offset);
                 searchPets(zipcode, petType, 10, offset);
             }
         });
@@ -97,10 +86,8 @@ $(document).ready(() => {
     $(document).on("swipeleft", ".pet-card", function(event) {
         $(this).addClass("rotate-right").delay(700).fadeOut(1, () => {
             $(this).remove();
-            // console.log($(".pet-card").length);
             if($(".pet-card").length <= 0) {
                 offset += 10;
-                // console.log(offset);
                 searchPets(zipcode, petType, 10, offset);
             }
         });
@@ -137,7 +124,6 @@ $(document).ready(() => {
 
     firebase.auth().onAuthStateChanged(firebaseUser => {
         if(firebaseUser) {
-            console.log("logged in");            
             $("#login").text(firebaseUser.email);
             $("#login-form").addClass("d-none");
             $("#logout-btn").removeClass("d-none");
@@ -148,7 +134,6 @@ $(document).ready(() => {
             initFavorites();
             
         } else {
-            console.log('not logged in');
             $("#home").click();
             $(".favorites").remove();
             favoriteData = [];
@@ -171,11 +156,9 @@ function initFavorites() {
         database.ref("users/" + uid + "/favorites").once("value").then(snapshot => {
             if(snapshot.val()) {
                 const userFavorites = Object.values(snapshot.val());
-                console.log(userFavorites);
                 if(userFavorites.length > 0) $("#clear-all").removeClass("d-none");
                 userFavorites.forEach(userFavorite => {
                     favorites.push(userFavorite.id);
-                    console.log(userFavorite.id);
                     let queryURL = "https://api.petfinder.com/pet.get?key=7dc1511d0faaadd24a44d60d637a14d8&id=";
                     queryURL += userFavorite.id;
                     queryURL += "&format=json&callback=?";
@@ -200,7 +183,7 @@ function addFavorite(id) {
         $("#clear-all").removeClass("d-none");
         favorites.push(id);
         const uid = firebase.auth().currentUser.uid;
-        // localStorage.setItem("favorites", JSON.stringify(favorites));
+
         if(uid) {
             database.ref("users/" + uid + "/favorites").push({id});
         }
@@ -213,7 +196,6 @@ function addFavorite(id) {
             type: "GET",
             dataType: "json"
         }).then((response) => {
-            // console.log(response);
             displayFavorite(response.petfinder.pet);
             favoriteData.push(response.petfinder.pet);
         }).fail((error) =>{
@@ -242,7 +224,6 @@ function removeFavorite(id) {
             $("#clear-all").addClass("d-none");
         }
     }
-    // localStorage.setItem("favorites", JSON.stringify(favorites));
 }
 
 function removeAllFavorites() {
@@ -251,7 +232,6 @@ function removeAllFavorites() {
         favorites = [];
         favoriteData = [];
         $(".favorite").remove();
-        // localStorage.setItem("favorites", JSON.stringify(favorites));
         if(uid) {
             database.ref("users/" + uid + "/favorites").remove();
         }
@@ -270,15 +250,12 @@ function searchPets(zip, type, count, offset) {
     }
 
     queryURL += "&output=full&format=json&callback=?";
-    // console.log(queryURL);
     $.ajax({
         url: queryURL,
         type: "GET",
         dataType: "json"
     }).then((response) => {
-        // console.log(response);
         pets = response.petfinder.pets.pet;
-        // console.log(response.petfinder.lastOffset["$t"]);
         offset = response.petfinder.lastOffset["$t"];
         pets.forEach((pet) => {
             if(!favorites.includes(pet.id["$t"])) {
@@ -286,8 +263,6 @@ function searchPets(zip, type, count, offset) {
             }
         });
         if($(".pet-card").length <= 0) {
-            // offset = Number(offset) + 10;
-            // console.log(offset);
             searchPets(zipcode, petType, 10, offset);
         }
     }).fail((error) => {
@@ -335,7 +310,6 @@ function displayPetCard(pet) {
 }
 
 function displayFavorite(pet) {
-    // console.log(pet);
     const name = pet.name["$t"];
     const imgSrc = pet.media.photos.photo[3]["$t"]
 
@@ -466,7 +440,6 @@ function getPetDataFromID(id) {
             return false;
         }
     });
-    // console.log("got pet data", petData);
     return petData;
 
 }
