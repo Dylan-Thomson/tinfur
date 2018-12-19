@@ -273,8 +273,11 @@ function displayFavorite(pet) {
         $("#fav-sex").empty();
         $("#fav-sex").text(getSex(petData.sex["$t"]));
 
-        $("fav-age").empty();
+        $("#fav-age").empty();
         $("#fav-age").text(petData.age["$t"]);
+
+        $("#fav-desc").empty();
+        $("#fav-desc").text(petData.description["$t"]);
 
         $("#fav-phone").empty();
         $("#fav-phone").attr("href", "");
@@ -301,6 +304,12 @@ function displayFavorite(pet) {
         $("#fav-zip").empty();
         $("#fav-zip").text(petData.contact.zip["$t"]);
 
+        $("#get-directions").empty("href");
+        $("#get-directions").text("Get Directions")
+        $("#get-directions").attr("href", "https://www.google.com/maps/dir/?api=1&destination="+petData.contact.address1.$t+","+petData.contact.city.$t+","+petData.contact.state.$t);
+        $("#get-directions").attr("target", "_blank");
+        
+
         $("#fav-remove").off("click");
         $("#fav-remove").on("click", () => {
             removeFavorite(id);
@@ -310,7 +319,7 @@ function displayFavorite(pet) {
         $("#favorite-info").show();
     });
 
-    $("#favorites-container").prepend(favDiv);
+    $("#favorites-container").append(favDiv);
 
 }
 
@@ -355,4 +364,5 @@ function getPetDataFromID(id) {
     });
     console.log("got pet data", petData);
     return petData;
+
 }

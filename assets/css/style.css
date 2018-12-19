@@ -68,6 +68,7 @@ span.psw {
 
 .pet-card, #sample-card, .favorite {
   border: purple 2px solid; 
+  max-height: 600px;
 }
 
 .pet-card {
@@ -129,4 +130,22 @@ footer {
   .cancelbtn {
     width: 100%;
   }
+}
+
+#get-directions {
+  color: cornflowerblue
+}
+
+#fav-desc {
+  padding: 10px;
+  line-height: 2.0;
+}
+
+#fav-img {
+  border: 2px grey solid;
+  margin-top: 10px;
+}
+
+.pet-img {
+  max-height: 500px;
 }
