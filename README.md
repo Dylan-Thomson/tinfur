@@ -28,7 +28,7 @@ The primary goal is to give the user a list of nearby local pets to swipe throug
 * Google Firebase Auth
 * Google Firebase Realtime Database
 
-## Contributers
+## Contributors
 * [Dylan Thomson](https://github.com/Dylan-Thomson) - Petfinder, JavaScript, Firebase database
 * [Joseph Williamson](https://github.com/jmbw88) - HTML/CSS, Google Maps
 * [Stacy Acker](https://github.com/slacker2222) - HTML/CSS, Firebase Auth
