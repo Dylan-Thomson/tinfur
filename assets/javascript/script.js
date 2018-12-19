@@ -164,7 +164,6 @@ $(document).ready(() => {
             $("#favorites").addClass("d-none");
         } 
       });
-
 });
 
 // Get favorites from local storage and populate favorites div
@@ -334,6 +333,7 @@ function displayPetCard(pet) {
     }
 }
 
+// Display favorite pet, click to get more info
 function displayFavorite(pet) {
     const name = pet.name["$t"];
     const imgSrc = pet.media.photos.photo[3]["$t"]
@@ -411,8 +411,15 @@ function displayFavorite(pet) {
         $("#get-directions").empty("href");
         $("#get-directions").text("Get Directions");
         
-        $("#get-directions").attr("href", "https://www.google.com/maps/dir/?api=1&destination="+petData.contact.address1.$t+","+petData.contact.city.$t+","+petData.contact.state.$t);
-        $("#get-directions").attr("target", "_blank");
+        console.log(isValidAddress(petData.contact.address1["$t"]));
+        if(isValidAddress(petData.contact.address1["$t"])) {
+            $("#get-directions").removeClass("d-none");
+            $("#get-directions").attr("href", "https://www.google.com/maps/dir/?api=1&destination="+petData.contact.address1.$t+","+petData.contact.city.$t+","+petData.contact.state.$t);
+            $("#get-directions").attr("target", "_blank");
+        }
+        else {
+            $("#get-directions").addClass("d-none");
+        }
         
         // Remove old listener for favorite removal button
         $("#fav-remove").off("click");
@@ -473,4 +480,8 @@ function getPetDataFromID(id) {
         }
     });
     return petData;
+}
+
+function isValidAddress(address) {
+    return address.length > 1 && /\d/.test(address) && address.substr(0,1).toLowerCase() !== "po";
 }
