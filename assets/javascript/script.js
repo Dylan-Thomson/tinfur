@@ -6,14 +6,13 @@ let favorites = [];
 let favoriteData = [];
         
 $(document).ready(() => {
-    // initFavorites();
-
+    // Display login form
     $("#login").on("click", event => {
         event.preventDefault();
-        console.log("login click");
         $("#login-modal").modal("show");
     });
 
+    // Log in existing user
     $("#login-btn").on("click", event => {
         event.preventDefault();
         $("#login-error-msg").text("");
@@ -21,22 +20,17 @@ $(document).ready(() => {
         const password = $("#password-input").val();
         const auth = firebase.auth();
 
-        const promise = auth.signInWithEmailAndPassword(email, password);
-        console.log("Logging in", email);
-        $("#email-input").val("");
-        $("#password-input").val("");
+        const promise = auth.signInWithEmailAndPassword(email, password).then(() => {
+            $("#login-modal").modal("hide");
+            $("#email-input").val("");
+            $("#password-input").val("");
+        });
         promise.catch(error => {
-            if(error) {
-                $("#login-error-msg").text(error.message);
-                console.log(error.message);
-            }
-            else {
-                $("#login-modal").modal("hide");
-                // $("#login-error-msg").text("");
-            }
+            $("#login-error-msg").text(error.message);
         }); 
     });
     
+    // Sign up new user
     $("#signup-btn").on("click", event => {
         event.preventDefault();
         $("#login-error-msg").text("");
@@ -44,30 +38,25 @@ $(document).ready(() => {
         const password = $("#password-input").val();
         const auth = firebase.auth();
         
-        const promise = auth.createUserWithEmailAndPassword(email, password);
-        console.log("Signing up", email);
-        $("#email-input").val("");
-        $("#password-input").val("");
+        const promise = auth.createUserWithEmailAndPassword(email, password).then(() => {
+            $("#login-modal").modal("hide");
+            $("#email-input").val("");
+            $("#password-input").val("");
+        });
         promise.catch(error => {
-            if(error) {
-                $("#login-error-msg").text(error.message);
-                console.log(error.message);
-            }
-            else {
-                $("#login-modal").modal("hide");
-                // $("#login-error-msg").text("");
-            }
+            $("#login-error-msg").text(error.message);
         });
         
     });
 
+    // Log out user
     $("#logout-btn").on("click", event => {
         event.preventDefault();
         firebase.auth().signOut();
-        console.log("Logging out", firebase.auth().currentUser.email);
         $("#login-modal").modal("hide");
     });
 
+    // Submit pet search
     $("#search-pets").on("click", event => {
         event.preventDefault();
         zipcode = $("#input-zip-code").val().trim();
@@ -75,7 +64,6 @@ $(document).ready(() => {
         if(zipcode.length > 0) {
             offset = 0;
             pets = {};
-            // console.log(zipcode, petType);
             searchPets(zipcode, petType, 10);
             $("#input-zip-code").val("");
             $("#select-pet").val("");
@@ -83,37 +71,39 @@ $(document).ready(() => {
             $("#pet-container").removeClass("d-none");
             $("#pet-container").empty();
             $("#favorites-container").addClass("d-none");
+            // Auto close dropdown afterwards on small screens
             if($(window).width() < 992) {
                 $(".navbar-toggler").click();
             }
         }
     });
 
+    // Swipe right, animate, remove current card, add current card to favorites
     $(document).on("swiperight", ".pet-card", function(event) {
         addFavorite($(this).attr("data-petID"));
         $(this).addClass("rotate-left").delay(700).fadeOut(1, () => {
             $(this).remove();
-            // console.log($(".pet-card").length);
+            // When user swipes through all cards in query, get next group
             if($(".pet-card").length <= 0) {
                 offset += 10;
-                // console.log(offset);
                 searchPets(zipcode, petType, 10, offset);
             }
         });
     });
     
+    // Swipe left, animate and remove current card
     $(document).on("swipeleft", ".pet-card", function(event) {
         $(this).addClass("rotate-right").delay(700).fadeOut(1, () => {
             $(this).remove();
-            // console.log($(".pet-card").length);
+            // When user swipes through all cards in query, get next group
             if($(".pet-card").length <= 0) {
                 offset += 10;
-                // console.log(offset);
                 searchPets(zipcode, petType, 10, offset);
             }
         });
     });
 
+    // Favorites screen
     $("#favorites").on("click", event => {
         event.preventDefault();
         $("#sample-card").addClass("d-none");
@@ -121,11 +111,13 @@ $(document).ready(() => {
         $("#pet-container").addClass("d-none");
         $(this).addClass("active");
         $("#home").removeClass("active");
+        // Auto close dropdown afterwards on small screens
         if($(window).width() < 992) {
             $(".navbar-toggler").click();
         }
     });
     
+    // Home screen
     $("#home").on("click", event => {
         event.preventDefault();
         $("#sample-card").removeClass("d-none");
@@ -133,19 +125,22 @@ $(document).ready(() => {
         $("#pet-container").addClass("d-none");
         $(this).addClass("active");
         $("#favorites").removeClass("active");
+        // Auto close dropdown afterwards on small screens
         if($(window).width() < 992) {
             $(".navbar-toggler").click();
         }
     });
 
+    // Click to remove all favorites
     $("#clear-all").on("click", () => {
         removeAllFavorites();
         $("#clear-all").addClass("d-none");
     });
 
+    // Handle login/logout
     firebase.auth().onAuthStateChanged(firebaseUser => {
         if(firebaseUser) {
-            console.log("logged in");            
+            // Display user email
             $("#login").text(firebaseUser.email);
             $("#login-form").addClass("d-none");
             $("#logout-btn").removeClass("d-none");
@@ -153,10 +148,10 @@ $(document).ready(() => {
             $("#home").removeClass("d-none");
             $("#favorites").removeClass("d-none");
 
+            // Get user's favorites and display
             initFavorites();
             
         } else {
-            console.log('not logged in');
             $("#home").click();
             $(".favorites").remove();
             favoriteData = [];
@@ -169,7 +164,6 @@ $(document).ready(() => {
             $("#favorites").addClass("d-none");
         } 
       });
-
 });
 
 // Get favorites from local storage and populate favorites div
@@ -179,11 +173,9 @@ function initFavorites() {
         database.ref("users/" + uid + "/favorites").once("value").then(snapshot => {
             if(snapshot.val()) {
                 const userFavorites = Object.values(snapshot.val());
-                console.log(userFavorites);
                 if(userFavorites.length > 0) $("#clear-all").removeClass("d-none");
                 userFavorites.forEach(userFavorite => {
                     favorites.push(userFavorite.id);
-                    console.log(userFavorite.id);
                     let queryURL = "https://api.petfinder.com/pet.get?key=7dc1511d0faaadd24a44d60d637a14d8&id=";
                     queryURL += userFavorite.id;
                     queryURL += "&format=json&callback=?";
@@ -203,12 +195,13 @@ function initFavorites() {
     }
 }
 
+// Add favorite to firebase and local variables given id
 function addFavorite(id) {
     if(firebase.auth().currentUser) {
         $("#clear-all").removeClass("d-none");
         favorites.push(id);
         const uid = firebase.auth().currentUser.uid;
-        // localStorage.setItem("favorites", JSON.stringify(favorites));
+
         if(uid) {
             database.ref("users/" + uid + "/favorites").push({id});
         }
@@ -221,7 +214,6 @@ function addFavorite(id) {
             type: "GET",
             dataType: "json"
         }).then((response) => {
-            // console.log(response);
             displayFavorite(response.petfinder.pet);
             favoriteData.push(response.petfinder.pet);
         }).fail((error) =>{
@@ -230,6 +222,7 @@ function addFavorite(id) {
     }
 }
 
+// Remove favorite from firebase and local variables given id
 function removeFavorite(id) {
     if(firebase.auth().currentUser) {
         const uid = firebase.auth().currentUser.uid;
@@ -250,22 +243,22 @@ function removeFavorite(id) {
             $("#clear-all").addClass("d-none");
         }
     }
-    // localStorage.setItem("favorites", JSON.stringify(favorites));
 }
 
+// Remove all favorites on firebase and local variables
 function removeAllFavorites() {
     if(firebase.auth().currentUser) {
         const uid = firebase.auth().currentUser.uid;
         favorites = [];
         favoriteData = [];
         $(".favorite").remove();
-        // localStorage.setItem("favorites", JSON.stringify(favorites));
         if(uid) {
             database.ref("users/" + uid + "/favorites").remove();
         }
     }
 }
 
+// Call petfinder API using search parameters
 function searchPets(zip, type, count, offset) {
     let queryURL = "https://api.petfinder.com/pet.find?key=7dc1511d0faaadd24a44d60d637a14d8"
     queryURL += "&location=" + zip;
@@ -278,24 +271,21 @@ function searchPets(zip, type, count, offset) {
     }
 
     queryURL += "&output=full&format=json&callback=?";
-    // console.log(queryURL);
     $.ajax({
         url: queryURL,
         type: "GET",
         dataType: "json"
     }).then((response) => {
-        // console.log(response);
         pets = response.petfinder.pets.pet;
-        // console.log(response.petfinder.lastOffset["$t"]);
         offset = response.petfinder.lastOffset["$t"];
         pets.forEach((pet) => {
             if(!favorites.includes(pet.id["$t"])) {
+                // display pet if not stored in favorites
                 displayPetCard(pet);
             }
         });
         if($(".pet-card").length <= 0) {
-            // offset = Number(offset) + 10;
-            // console.log(offset);
+            // Get more pets if there are none to display (all are favorites)
             searchPets(zipcode, petType, 10, offset);
         }
     }).fail((error) => {
@@ -303,6 +293,7 @@ function searchPets(zip, type, count, offset) {
     });
 }
 
+// Display swipable pet card
 function displayPetCard(pet) {
     if(pet.media.photos) { // If there are no photos don't bother
         const name = pet.name["$t"];
@@ -342,8 +333,8 @@ function displayPetCard(pet) {
     }
 }
 
+// Display favorite pet, click to get more info
 function displayFavorite(pet) {
-    // console.log(pet);
     const name = pet.name["$t"];
     const imgSrc = pet.media.photos.photo[3]["$t"]
 
@@ -365,10 +356,11 @@ function displayFavorite(pet) {
     favDiv.append(img);
     favDiv.append(overlay);
 
-    
+    // Set up favorite modal functionality
     favDiv.attr("data-toggle", "modal");
     favDiv.attr("data-target", "#favorite-info");
     favDiv.attr("data-petID", pet.id["$t"]);
+     // Populate favorite modal data
     favDiv.on("click", function() {
         let id = $(this).attr("data-petID");
         let petData = getPetDataFromID(id);
@@ -417,24 +409,35 @@ function displayFavorite(pet) {
         $("#fav-zip").text(petData.contact.zip["$t"]);
 
         $("#get-directions").empty("href");
-        $("#get-directions").text("Get Directions")
-        $("#get-directions").attr("href", "https://www.google.com/maps/dir/?api=1&destination="+petData.contact.address1.$t+","+petData.contact.city.$t+","+petData.contact.state.$t);
-        $("#get-directions").attr("target", "_blank");
+        $("#get-directions").text("Get Directions");
         
-
+        // Display get directions if we have a valid address to work with
+        if(isValidAddress(petData.contact.address1["$t"])) {
+            $("#get-directions").removeClass("d-none");
+            $("#get-directions").attr("href", "https://www.google.com/maps/dir/?api=1&destination="+petData.contact.address1.$t+","+petData.contact.city.$t+","+petData.contact.state.$t);
+            $("#get-directions").attr("target", "_blank");
+        }
+        else {
+            $("#get-directions").addClass("d-none");
+        }
+        
+        // Remove old listener for favorite removal button
         $("#fav-remove").off("click");
+        // Generate new listener for favorite removal button
         $("#fav-remove").on("click", () => {
             removeFavorite(id);
             $("#favorite-info").modal("toggle");
         });
-
+        //Finally show modal
         $("#favorite-info").show();
     });
 
+    // Add favorite card to container
     $("#favorites-container").append(favDiv);
 
 }
 
+// Get breed/breeds for an animal and return as formated string
 function getBreeds(breeds) {
     let breedString = "";
     if(Array.isArray(breeds)) {
@@ -453,6 +456,7 @@ function getBreeds(breeds) {
     return breedString;
 }
 
+// Get sex of animal and return as string
 function getSex(sex) {
     if(sex == "F" || sex == "f") {
         return "Female";
@@ -465,6 +469,7 @@ function getSex(sex) {
     }
 }
 
+// Get locally stored pet information given an ID
 function getPetDataFromID(id) {
     let petData;
     favoriteData.forEach((favorite) => {
@@ -474,7 +479,9 @@ function getPetDataFromID(id) {
             return false;
         }
     });
-    // console.log("got pet data", petData);
     return petData;
+}
 
+function isValidAddress(address) {
+    return address.length > 1 && /\d/.test(address) && address.substr(0,1).toLowerCase() !== "po";
 }
