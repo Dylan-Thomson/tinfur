@@ -23,7 +23,7 @@ The primary goal is to give the user a list of nearby local pets to swipe throug
 * Bootstrap
 * jQuery
 * jQuery Mobile
-* Petfiner API
+* Petfinder API
 * Google Maps API
 * Google Firebase Auth
 * Google Firebase Realtime Database
