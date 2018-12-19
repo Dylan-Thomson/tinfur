@@ -18,11 +18,11 @@
     <title>TinFur</title>
 </head>
 <body>
-    <div class="text-center">
+    <div class="text-center" id="logo-container">
       <img id="logo" src='assets/images/TinFur_Logo.png' alt='Logo'>
     </div>
   <!--Login Button On Navbar; Button opens the modal.-->
-<nav class="navbar navbar-expand-lg navbar-light" style="background-color: palevioletred;">
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #FE7885;">
     <button class="p-3" id="login">Login</button>
     <!-- The Modal -->
     <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -46,15 +46,15 @@
                                   <label for="password-input">Password:</label>
                                   <input class="form-control" id="password-input" type="password" placeholder="Password">
                               </div>
-                              <button id="login-btn" class="btn btn-action">
+                              <button id="login-btn" class="btn btn-primary">
                                 Log in
                               </button>
-                              <button id="signup-btn" class="btn btn-secondary">
+                              <button id="signup-btn" class="btn btn-info">
                                 Sign Up
                               </button>    
                         </form>
                         <div class="text-center">
-                            <button id="logout-btn" class="btn btn-action d-none">
+                            <button id="logout-btn" class="btn btn-warning d-none">
                                 Log Out
                             </button>    
                         </div>
@@ -62,12 +62,6 @@
               </div>  
         </div>
     </div>
-<div id="login-modal" class="modal">
-    <span onclick="document.getElementById('login-modal').style.display='none'" 
-  class="close" title="Close Modal">&times;</span>
-  
-    <!-- Modal Content -->
-</div>
   
 <!--The Navbar should create 'sandwich button' on smaller screens.-->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
