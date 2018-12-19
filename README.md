@@ -1,5 +1,7 @@
 # TinFur
 
+https://dylan-thomson.github.io/tinfur/
+
 ## What is TinFur?
 TinFur is a fun way to search for adoptable pets in your area. 
 
@@ -27,6 +29,6 @@ The primary goal is to give the user a list of nearby local pets to swipe throug
 * Google Firebase Realtime Database
 
 ## Contributers
-Dylan Thomson - Petfinder, JavaScript, Firebase database
-Joseph Williamson - HTML/CSS, Google Maps
-Stacy Acker - HTML/CSS, Firebase Auth
+[Dylan Thomson](https://github.com/Dylan-Thomson) - Petfinder, JavaScript, Firebase database
+[Joseph Williamson](https://github.com/jmbw88) - HTML/CSS, Google Maps
+[Stacy Acker](https://github.com/slacker2222) - HTML/CSS, Firebase Auth
