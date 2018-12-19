@@ -144,6 +144,7 @@ footer {
 #fav-img {
   border: 2px grey solid;
   margin-top: 10px;
+  max-width: 80%;
 }
 
 .pet-img {

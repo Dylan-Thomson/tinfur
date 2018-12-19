@@ -112,9 +112,9 @@ $(document).ready(() => {
         }
     });
 
-    $("#fav-close").on("click", () => {
-        $("#favorite-info").modal("toggle");
-    });
+    // $("#fav-close").on("click", () => {
+    //     $("#favorite-info").modal("toggle");
+    // });
 
     $("#clear-all").on("click", () => {
         removeAllFavorites();
