@@ -21,19 +21,15 @@ $(document).ready(() => {
         const password = $("#password-input").val();
         const auth = firebase.auth();
 
-        const promise = auth.signInWithEmailAndPassword(email, password);
-        console.log("Logging in", email);
-        $("#email-input").val("");
-        $("#password-input").val("");
+        const promise = auth.signInWithEmailAndPassword(email, password).then(() => {
+            $("#login-modal").modal("hide");
+            $("#email-input").val("");
+            $("#password-input").val("");
+            console.log("Logging in", email);
+        });
         promise.catch(error => {
-            if(error) {
-                $("#login-error-msg").text(error.message);
-                console.log(error.message);
-            }
-            else {
-                $("#login-modal").modal("hide");
-                // $("#login-error-msg").text("");
-            }
+            $("#login-error-msg").text(error.message);
+            console.log(error.message);
         }); 
     });
     
@@ -44,19 +40,15 @@ $(document).ready(() => {
         const password = $("#password-input").val();
         const auth = firebase.auth();
         
-        const promise = auth.createUserWithEmailAndPassword(email, password);
-        console.log("Signing up", email);
-        $("#email-input").val("");
-        $("#password-input").val("");
+        const promise = auth.createUserWithEmailAndPassword(email, password).then(() => {
+            $("#login-modal").modal("hide");
+            $("#email-input").val("");
+            $("#password-input").val("");
+            console.log("Signing up", email);
+        });
         promise.catch(error => {
-            if(error) {
-                $("#login-error-msg").text(error.message);
-                console.log(error.message);
-            }
-            else {
-                $("#login-modal").modal("hide");
-                // $("#login-error-msg").text("");
-            }
+            $("#login-error-msg").text(error.message);
+            console.log(error.message);
         });
         
     });

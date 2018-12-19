@@ -74,22 +74,11 @@ span.psw {
 }
 
 .pet-card, #sample-card, .favorite {
-  border: #FD5061 2px solid; 
+  border: gray 2px solid; 
   max-height: 600px;
 }
 
-.pet-card {
-  display: none;
-}
 
-.pet-card:first-of-type {
-  display: inline-block;
-  margin: auto;
-}
-
-.card-body {
-  /* background-color: lightcyan; */
-}
 
 .dark-transparent-bg {
   background: rgb(11, 11, 11, 0.75);
@@ -128,15 +117,14 @@ footer {
   z-index: 10;
 }
 
-/* Change styles for span and cancel button on extra small screens */
-@media screen and (max-width: 300px) {
-  span.psw {
-    display: block;
-    float: none;
-  }
-  .cancelbtn {
-    width: 100%;
-  }
+/* Display only the first swipable pet card */
+.pet-card {
+  display: none;
+}
+
+.pet-card:first-of-type {
+  display: inline-block;
+  margin: auto;
 }
 
 #get-directions {
