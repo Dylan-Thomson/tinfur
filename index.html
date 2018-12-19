@@ -12,6 +12,8 @@
     crossorigin="anonymous"></script>    
     <script src="assets/javascript/jquery.mobile.custom.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase.js"></script>
+    <script src="assets/javascript/login.js"></script>
     <script src="assets/javascript/script.js"></script>
     <title>TinFur</title>
 </head>
@@ -29,22 +31,29 @@
   class="close" title="Close Modal">&times;</span>
   
     <!-- Modal Content -->
-    <form class="modal-content animate" action="/action_page.php">
+    <form class="modal-content animate">
   
       <div class="container">
-        <div class="form-group">
-            <label for="username-input"><b>Username</b></label>
-            <input class="form-control" type="text" placeholder="Enter Username" id="username-input" required>
-        </div>
-        <div class="form-group">
-            <label for="password-input"><b>Password</b></label>
-            <input class="form-control" type="password" placeholder="Enter Password" id="password-input" required>
-        </div>
-  
-        <button id="login-btn" type="submit">Login</button>
-        <label>
-          <input type="checkbox" checked="checked" id="remember-user"> Remember me
-        </label>
+          <div class="form-group">
+              <input id="txtEmail" type="email" placeholder="Email">
+          </div>
+
+          <div class="form-group">
+              <input id="txtPassword" type="password" placeholder="Password">
+          </div>
+
+
+        <button id="btnLogin" class="btn btn-action">
+          log in
+        </button>
+
+        <button id="btnSignUp" class="btn btn-secondary">
+          Sign Up
+        </button>
+
+        <button id="btnLogOut" class="btn btn-action hide">
+          Log Out
+        </button>
       </div>
   
       <!-- <div class="container" style="background-color:#f1f1f1">
