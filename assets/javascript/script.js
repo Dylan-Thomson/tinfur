@@ -473,5 +473,4 @@ function getPetDataFromID(id) {
         }
     });
     return petData;
-
 }
