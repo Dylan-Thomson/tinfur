@@ -155,6 +155,10 @@ $(document).ready(() => {
             
         } else {
             console.log('not logged in');
+            $("#home").click();
+            $(".favorites").remove();
+            favoriteData = [];
+            favorites = [];
             $("#login").text("Login");
             $("#login-form").removeClass("d-none");
             $("#logout-btn").addClass("d-none");
