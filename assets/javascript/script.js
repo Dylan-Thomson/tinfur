@@ -240,10 +240,14 @@ function removeFavorite(id) {
 }
 
 function removeAllFavorites() {
+    const uid = firebase.auth().currentUser.uid;
     favorites = [];
     favoriteData = [];
     $(".favorite").remove();
     // localStorage.setItem("favorites", JSON.stringify(favorites));
+    if(uid) {
+        database.ref("users/" + uid + "/favorites").remove();
+    }
 }
 
 function searchPets(zip, type, count, offset) {
