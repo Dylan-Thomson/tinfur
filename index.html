@@ -35,7 +35,7 @@
                             </button>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form id="login-form">
                               <div class="form-group">
                                   <label for="email-input">Email:</label>
                                   <input class="form-control" id="email-input" type="email" placeholder="Email">
@@ -53,10 +53,10 @@
                               Log in
                             </button>
                     
-                            <button id="logout-btn" class="btn btn-action">
-                              Log Out
-                            </button>    
                         </form>
+                        <button id="logout-btn" class="btn btn-action d-none">
+                            Log Out
+                        </button>    
                     </div>
               </div>  
         </div>
@@ -130,6 +130,7 @@
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                   <div class="modal-content">
                       <!-- <div class="modal-header"></div> -->
+                      <!-- <div class="modal-body"></div> -->
                       <div class="row">
                           <div class="col-lg-6">
                               <img class="pet-img" src="" id="fav-img" alt="">

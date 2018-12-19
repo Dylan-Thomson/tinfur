@@ -126,7 +126,10 @@ $(document).ready(() => {
             console.log("logged in");
             let user = firebase.auth().currentUser;
             let uid = user.uid;
-    
+            
+            $("#login").text(user.email);
+            $("#login-form").addClass("d-none");
+            $("#logout-btn").removeClass("d-none");
             database.ref().once("value").then((snapshot) => {
                 if(!snapshot.child(uid).exists()) {
                     console.log("No favorite data for this user initialized");
@@ -135,9 +138,12 @@ $(document).ready(() => {
                     console.log(snapshot.child(uid));
                 }
             });
-    
+            
         } else {
-          console.log('not logged in');
+            console.log('not logged in');
+            $("#login").text("Login");
+            $("#login-form").removeClass("d-none");
+            $("#logout-btn").addClass("d-none");
         }
       
       });
