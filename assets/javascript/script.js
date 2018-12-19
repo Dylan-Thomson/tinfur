@@ -411,7 +411,7 @@ function displayFavorite(pet) {
         $("#get-directions").empty("href");
         $("#get-directions").text("Get Directions");
         
-        console.log(isValidAddress(petData.contact.address1["$t"]));
+        // Display get directions if we have a valid address to work with
         if(isValidAddress(petData.contact.address1["$t"])) {
             $("#get-directions").removeClass("d-none");
             $("#get-directions").attr("href", "https://www.google.com/maps/dir/?api=1&destination="+petData.contact.address1.$t+","+petData.contact.city.$t+","+petData.contact.state.$t);
