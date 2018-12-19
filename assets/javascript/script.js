@@ -115,11 +115,18 @@ function initFavorites() {
 }
 
 function addFavorite(id) {
-    const user = firebase.auth().currentUser;
-    console.log(user);
-    user.favorites = id;
+    // user.favorites = id;
     $("#clear-all").removeClass("d-none");
     favorites.push(id);
+    const user = firebase.auth().currentUser;
+    if(user) {
+        // user.favorites.push(id);
+        // user.updateProfile({
+        //     favorites: favorites
+        // });
+        // console.log(user.favorites);
+    }
+    // console.log(user);
     localStorage.setItem("favorites", JSON.stringify(favorites));
     let queryURL = "https://api.petfinder.com/pet.get?key=7dc1511d0faaadd24a44d60d637a14d8&id=";
     queryURL += id;

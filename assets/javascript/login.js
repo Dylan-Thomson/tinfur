@@ -57,9 +57,9 @@ $(document).ready(function () {
         console.log("logged in");
         // btnLogOut.classList.remove('d-none');
         let user = firebase.auth().currentUser;
-        if(!user.favorites) {
-            user.favorites = [];
-        }
+        // if(!user.favorites) {
+        //     user.favorites = [];
+        // }
     } else {
       console.log('not logged in');
     //   btnLogOut.classList.add('d-none');
