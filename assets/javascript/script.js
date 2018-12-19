@@ -112,10 +112,6 @@ $(document).ready(() => {
         }
     });
 
-    // $("#fav-close").on("click", () => {
-    //     $("#favorite-info").modal("toggle");
-    // });
-
     $("#clear-all").on("click", () => {
         removeAllFavorites();
         $("#clear-all").addClass("d-none");
@@ -131,11 +127,22 @@ $(document).ready(() => {
             $("#login-form").addClass("d-none");
             $("#logout-btn").removeClass("d-none");
             database.ref().once("value").then((snapshot) => {
-                if(!snapshot.child(uid).exists()) {
-                    console.log("No favorite data for this user initialized");
+                if(!snapshot.child("users").exists()) {
+                    // database.ref("users").set({
+                    //     uid: favorites = {
+                    //         test: "val"
+                    //     }
+                    // });
                 }
                 else {
-                    console.log(snapshot.child(uid));
+                    if(snapshot.val().uid) {
+                        console.log(snapshot.val().uid);
+                    }
+                    else {
+                        // database.ref("userFavorites").push(uid);
+                        console.log("no user data");
+                    }
+                    console.log("we", snapshot.val());
                 }
             });
             
@@ -144,15 +151,25 @@ $(document).ready(() => {
             $("#login").text("Login");
             $("#login-form").removeClass("d-none");
             $("#logout-btn").addClass("d-none");
-        }
-      
+        } 
       });
+
+    //   database.ref().once("value").then((snapshot) => {
+    //     if(snapshot.val()) {
+    //         console.log("user favorites already exists");
+    //     }
+    //     else {
+    //         database.ref("userFavorites").set({
+    //             test: "val"
+    //         });
+    //     }
+    //   });
 });
 
 // Get favorites from local storage and populate favorites div
 function initFavorites() {
     if(localStorage.favorites){
-        favorites = JSON.parse(localStorage.favorites);
+        // favorites = JSON.parse(localStorage.favorites);
         if(favorites.length > 0) {
             $("#clear-all").removeClass("d-none");
         }
@@ -177,19 +194,14 @@ function initFavorites() {
 }
 
 function addFavorite(id) {
-    // user.favorites = id;
     $("#clear-all").removeClass("d-none");
     favorites.push(id);
-    const user = firebase.auth().currentUser;
-    if(user) {
-        // user.favorites.push(id);
-        // user.updateProfile({
-        //     favorites: favorites
-        // });
-        // console.log(user.favorites);
+    const uid = firebase.auth().currentUser.uid;
+    // localStorage.setItem("favorites", JSON.stringify(favorites));
+    if(uid) {
+        database.ref("users/" + uid + "/favorites").push({id});
     }
-    // console.log(user);
-    localStorage.setItem("favorites", JSON.stringify(favorites));
+
     let queryURL = "https://api.petfinder.com/pet.get?key=7dc1511d0faaadd24a44d60d637a14d8&id=";
     queryURL += id;
     queryURL += "&format=json&callback=?";
@@ -207,6 +219,14 @@ function addFavorite(id) {
 }
 
 function removeFavorite(id) {
+    const uid = firebase.auth().currentUser.uid;
+    if(uid) {
+        database.ref("users/" + uid + "/favorites").orderByChild("id").equalTo(id).once("value", snapshot => {
+            const updates = {};
+            snapshot.forEach(child => updates[child.key] = null);
+            database.ref("users/" + uid + "/favorites").update(updates);
+        });
+    }
     favorites = favorites.filter(favID => favID !== id);
     favoriteData = favoriteData.filter((favorite) => {
         let favID = favorite.id["$t"];
@@ -216,14 +236,14 @@ function removeFavorite(id) {
     if(favorites.length <= 0) {
         $("#clear-all").addClass("d-none");
     }
-    localStorage.setItem("favorites", JSON.stringify(favorites));
+    // localStorage.setItem("favorites", JSON.stringify(favorites));
 }
 
 function removeAllFavorites() {
     favorites = [];
     favoriteData = [];
     $(".favorite").remove();
-    localStorage.setItem("favorites", JSON.stringify(favorites));
+    // localStorage.setItem("favorites", JSON.stringify(favorites));
 }
 
 function searchPets(zip, type, count, offset) {
