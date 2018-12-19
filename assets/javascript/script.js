@@ -16,6 +16,7 @@ $(document).ready(() => {
 
     $("#login-btn").on("click", event => {
         event.preventDefault();
+        $("#login-error-msg").text("");
         let email = $("#email-input").val();
         const password = $("#password-input").val();
         const auth = firebase.auth();
@@ -31,13 +32,14 @@ $(document).ready(() => {
             }
             else {
                 $("#login-modal").modal("hide");
-                $("#login-error-msg").text("");
+                // $("#login-error-msg").text("");
             }
         }); 
     });
     
     $("#signup-btn").on("click", event => {
         event.preventDefault();
+        $("#login-error-msg").text("");
         const email = $("#email-input").val();
         const password = $("#password-input").val();
         const auth = firebase.auth();
@@ -53,7 +55,7 @@ $(document).ready(() => {
             }
             else {
                 $("#login-modal").modal("hide");
-                $("#login-error-msg").text("");
+                // $("#login-error-msg").text("");
             }
         });
         
@@ -165,9 +167,6 @@ $(document).ready(() => {
             $("#navbarDropdownMenuLink").addClass("d-none");
             $("#home").addClass("d-none");
             $("#favorites").addClass("d-none");
-            // navbarDropdownMenuLink
-            // home
-            //favorites
         } 
       });
 
