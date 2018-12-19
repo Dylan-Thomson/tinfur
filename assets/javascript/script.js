@@ -310,7 +310,7 @@ function displayFavorite(pet) {
         $("#favorite-info").show();
     });
 
-    $("#favorites-container").prepend(favDiv);
+    $("#favorites-container").append(favDiv);
 
 }
 
