@@ -97,18 +97,17 @@ footer {
   max-height: 500px;
 }
 
-
-@media only screen and (min-width: 1100px) {
-body {
-  background-image: url(../images/pet_background.png);
- }
-
-
 .green {
   color: green;
 }
 
 .red {
   color: red;
+}
+
+@media only screen and (min-width: 1100px) {
+body {
+  background-image: url(../images/pet_background.png);
+ }
 
 }

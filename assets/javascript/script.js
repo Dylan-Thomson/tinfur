@@ -358,7 +358,7 @@ function displayFavorite(pet) {
     overlay.append(title);
 
     let favDiv = $("<div>");
-    favDiv.addClass("card bg-dark text-white favorite my-1 mx-auto");
+    favDiv.addClass("card bg-dark text-white favorite my-3 mx-auto");
     favDiv.append(img);
     favDiv.append(overlay);
 
