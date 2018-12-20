@@ -85,6 +85,7 @@ $(document).ready(() => {
     // Swipe right, animate, remove current card, add current card to favorites
     $(document).on("swiperight", ".pet-card", function(event) {
         addFavorite($(this).attr("data-petID"));
+        $(this).find(".card-img-overlay").prepend("<i class=\"fas fa-3x fa-thumbs-up float-right green align-self-end p-3\"></i>");
         $(this).addClass("rotate-left").delay(700).fadeOut(1, () => {
             $(this).remove();
             // When user swipes through all cards in query, get next group
@@ -97,6 +98,7 @@ $(document).ready(() => {
     
     // Swipe left, animate and remove current card
     $(document).on("swipeleft", ".pet-card", function(event) {
+        $(this).find(".card-img-overlay").prepend("<i class=\"fas fa-3x fa-thumbs-down float-right red align-self-start p-3\"></i>");
         $(this).addClass("rotate-right").delay(700).fadeOut(1, () => {
             $(this).remove();
             // When user swipes through all cards in query, get next group
@@ -487,7 +489,7 @@ function getPetDataFromID(id) {
 }
 
 function isValidAddress(address) {
-    return address.length > 1 && /\d/.test(address) && address.substr(0,1).toLowerCase() !== "po";
+    return address && address.length > 0 && /\d/.test(address) && address.substr(0,1).toLowerCase() !== "po";
 }
 
 function isValidZipcode(zipcode) {
