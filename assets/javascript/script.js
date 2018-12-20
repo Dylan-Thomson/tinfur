@@ -489,7 +489,7 @@ function getPetDataFromID(id) {
 }
 
 function isValidAddress(address) {
-    return address && address.length > 0 && /\d/.test(address) && address.substr(0,1).toLowerCase() !== "po";
+    return address && address.length > 0 && /\d/.test(address) && address.substr(0,2).toLowerCase() !== "po";
 }
 
 function isValidZipcode(zipcode) {
