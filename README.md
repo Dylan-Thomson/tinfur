@@ -32,3 +32,7 @@ The primary goal is to give the user a list of nearby local pets to swipe throug
 * [Dylan Thomson](https://github.com/Dylan-Thomson) - Petfinder, JavaScript, Firebase database
 * [Joseph Williamson](https://github.com/jmbw88) - HTML/CSS, Google Maps
 * [Stacy Acker](https://github.com/slacker2222) - HTML/CSS, Firebase Auth
+
+## How To Clone
+* Open terminal to directory you wish to clone into and run `git clone https://github.com/Dylan-Thomson/tinfur.git`
+* Open `index.html` in your browser
