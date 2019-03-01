@@ -2,6 +2,7 @@
 
 https://dylan-thomson.github.io/tinfur/
 
+![Demo](assets/images/demo.gif)
 ## What is TinFur?
 TinFur is a fun way to search for adoptable pets in your area. 
 
