@@ -16,7 +16,7 @@ $(document).ready(() => {
     $("#login-btn").on("click", event => {
         event.preventDefault();
         $("#login-error-msg").text("");
-        let email = $("#email-input").val();
+        const email = $("#email-input").val();
         const password = $("#password-input").val();
         const auth = firebase.auth();
 
@@ -241,7 +241,7 @@ function removeFavorite(id) {
         }
         favorites = favorites.filter(favID => favID !== id);
         favoriteData = favoriteData.filter((favorite) => {
-            let favID = favorite.id["$t"];
+            const favID = favorite.id["$t"];
             return favID !== id;
         });
         $(".favorite[data-petID=\"" + id + "\"]").remove();
@@ -307,30 +307,30 @@ function displayPetCard(pet) {
         const breeds = getBreeds(pet.breeds.breed);
         const imgSrc = pet.media.photos.photo[2]["$t"]
         
-        let img = $("<img>");
+        const img = $("<img>");
         img.attr("src", imgSrc);
         img.attr("alt", name);
         img.addClass("card-img pet-img");
         
-        let title = $("<h5>");
+        const title = $("<h5>");
         title.addClass("card-title dark-transparent-bg my-0 p-1");
         title.text(name);
         
-        let breedText = $("<p>");
+        const breedText = $("<p>");
         breedText.addClass("card-text dark-transparent-bg m-0");
         breedText.text(breeds);
         
-        let sexText = $("<p>");
+        const sexText = $("<p>");
         sexText.addClass("card-text dark-transparent-bg m-0");
         sexText.text(sex); 
         
-        let overlay = $("<div>");
+        const overlay = $("<div>");
         overlay.addClass("card-img-overlay p-0 d-flex flex-column justify-content-end text-center");
         overlay.append(title);
         overlay.append(breedText);
         overlay.append(sexText);
         
-        let petDiv = $("<div>");
+        const petDiv = $("<div>");
         petDiv.append(img);
         petDiv.append(overlay);
         petDiv.attr("data-petID", pet.id["$t"]);
@@ -344,20 +344,20 @@ function displayFavorite(pet) {
     const name = pet.name["$t"];
     const imgSrc = pet.media.photos.photo[3]["$t"]
 
-    let img = $("<img>")
+    const img = $("<img>")
     img.attr("src", imgSrc);
     img.attr("alt", name);
     img.addClass("card-img pet-img");
 
-    let title = $("<h5>");
+    const title = $("<h5>");
     title.addClass("card-title dark-transparent-bg my-0 p-1");
     title.text(name);
     
-    let overlay = $("<div>");
+    const overlay = $("<div>");
     overlay.addClass("card-img-overlay p-0 d-flex flex-column justify-content-end text-center");
     overlay.append(title);
 
-    let favDiv = $("<div>");
+    const favDiv = $("<div>");
     favDiv.addClass("card bg-dark text-white favorite my-3 mx-auto");
     favDiv.append(img);
     favDiv.append(overlay);
@@ -368,8 +368,8 @@ function displayFavorite(pet) {
     favDiv.attr("data-petID", pet.id["$t"]);
      // Populate favorite modal data
     favDiv.on("click", function() {
-        let id = $(this).attr("data-petID");
-        let petData = getPetDataFromID(id);
+        const id = $(this).attr("data-petID");
+        const petData = getPetDataFromID(id);
 
         $("#fav-name").empty();
         $("#fav-name").text(petData.name["$t"]);
